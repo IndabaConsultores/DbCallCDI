@@ -57,7 +57,7 @@ public class StoredProceduresTest extends AbstractTest {
 	public void longTest() throws Exception {
 		Long testVal = 1l;
 		DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
-		ProcedureResult<Long> result = dbTester.callEchoNumberAsFunction(testVal);
+		ProcedureResult<Long> result = dbTester.callEchoPrimitiveNumberAsFunction(testVal);
 		assertNotNull(result);
 		assertEquals(testVal, result.getValue());
 
@@ -65,6 +65,31 @@ public class StoredProceduresTest extends AbstractTest {
 		assertNotNull(result);
 		assertEquals(testVal, result.getValue());
 	}
+	
+	@Test
+	public void primitiveLongTest() throws Exception {
+		long testVal = 1l;
+		DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
+		ProcedureResult<Long> result = dbTester.callEchoNumberAsFunction(testVal);
+		assertNotNull(result);
+		assertEquals(testVal, result.getValue().longValue());
+
+		result = dbTester.callEchoNumberAsProcedure(testVal);
+		assertNotNull(result);
+		assertEquals(testVal, result.getValue().longValue(), result.getValue());
+	}
+	
+//	@Test
+//	public void primitiveLongNullTest() throws Exception {
+//		Long testVal = null;
+//		DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
+//		ProcedureResult<Long> result = dbTester.callEchoPrimitiveNumberAsFunction(testVal);
+//		assertNotNull(result);
+//
+////		result = dbTester.callEchoNumberAsProcedure(testVal);
+////		assertNotNull(result);
+////		assertEquals(testVal, result.getValue().longValue(), result.getValue());
+//	}
 
 	@Test
 	public void doubleTest() throws Exception {

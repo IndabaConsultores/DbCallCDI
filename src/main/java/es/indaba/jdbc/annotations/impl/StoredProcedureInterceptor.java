@@ -48,7 +48,11 @@ public class StoredProcedureInterceptor {
 		Session delegate = (Session) manager.getDelegate();
 
 		delegate.doWork(callWork);
-
+		
+		if (callWork.getWorkException()!=null) {
+			throw callWork.getWorkException();
+		}
+		
 		invocationContext.proceed();
 
 		return callWork.getResultObject();

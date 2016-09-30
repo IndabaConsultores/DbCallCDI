@@ -14,8 +14,6 @@ package es.indaba.jdbc.annotations.extension;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.AfterBeanDiscovery;
@@ -25,6 +23,8 @@ import javax.enterprise.inject.spi.ProcessAnnotatedType;
 import javax.enterprise.inject.spi.WithAnnotations;
 
 import org.apache.deltaspike.core.util.bean.BeanBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.indaba.jdbc.annotations.api.DatabaseCall;
 import es.indaba.jdbc.annotations.impl.AnnotationInterfaceObjectFactory;
@@ -35,15 +35,14 @@ import es.indaba.jdbc.annotations.impl.AnnotationInterfaceObjectFactory;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class CDIExtension implements javax.enterprise.inject.spi.Extension {
 
-	private static final Logger logger = Logger.getLogger(CDIExtension.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(CDIExtension.class);
 
 	private final Set<Bean> beans = new HashSet<Bean>();
 
 	public <T> void processAnnotatedType(@WithAnnotations({ DatabaseCall.class }) @Observes ProcessAnnotatedType<T> pat, BeanManager bm) {
 		Class type = pat.getAnnotatedType().getJavaClass();
 		if (type.isInterface()) {
-			logger.log(Level.INFO, "JDBC CDI Module - Type detected!! " + pat.getAnnotatedType().getBaseType());
-			System.out.println("JDBC CDI Module - Type detected!!" + pat.getAnnotatedType().getAnnotations());
+			logger.info("DBCallCDI Module - Type detected!! {}", pat.getAnnotatedType().getBaseType());
 
 			AnnotationInterfaceObjectFactory factory = new AnnotationInterfaceObjectFactory();
 			try {
@@ -57,15 +56,15 @@ public class CDIExtension implements javax.enterprise.inject.spi.Extension {
 				beans.add(beanBuilder.create());
 
 			} catch (Exception e) {
-				logger.log(Level.SEVERE, e.getMessage(), e);
+				logger.error("Error processing DBCallCDI Annotations", e);
 			}
 		}
 	}
 
 	public void afterBeanDiscovery(@Observes AfterBeanDiscovery abd, BeanManager bm) {
-		logger.log(Level.INFO, "JDBC CDI Module - Activated");
+		logger.info("DBCallCDI Module - Activated");
 		for (Bean bean : this.beans) {
-			logger.log(Level.INFO, "JDBC CDI Module - DBCall discovered: {0}", bean.getName());
+			logger.info("DBCallCDI Module - DBCall discovered: {}", bean.getName());
 			abd.addBean(bean);
 		}
 		this.beans.clear();

@@ -52,6 +52,11 @@ public interface DBTester {
 	public ProcedureResult<Long> callEchoNumberAsFunction(@StoredProcedureParameter(1) Long name) throws Exception;
 	
 	@StoredProcedure("CALL echoNumber(?)")
+	@StoredProcedureResult({ @FieldResult(name = "value", position = FieldResult.RESULTSET, type=Long.class) })
+	@DatabaseCall
+	public ProcedureResult<Long> callEchoPrimitiveNumberAsFunction(@StoredProcedureParameter(1) long name) throws Exception;
+	
+	@StoredProcedure("CALL echoNumber(?)")
 	@StoredProcedureResult({ @FieldResult(name = "value", position = FieldResult.RESULTSET, type=Double.class) })
 	@DatabaseCall
 	public ProcedureResult<Double> callEchoNumberAsFunction(@StoredProcedureParameter(1) Double name) throws Exception;
@@ -60,6 +65,12 @@ public interface DBTester {
 	@StoredProcedureResult({ @FieldResult(name = "value", position = 2, type=Long.class)})
 	@DatabaseCall
 	public ProcedureResult<Long> callEchoNumberAsProcedure(@StoredProcedureParameter(1) Long name) throws Exception;
+	
+	@StoredProcedure("CALL echoNumberProc(?,?)")
+	@StoredProcedureResult({ @FieldResult(name = "value", position = 2, type=Long.class)})
+	@DatabaseCall
+	public ProcedureResult<Long> callEchoNumberAsProcedure(@StoredProcedureParameter(1) long name) throws Exception;
+
 
 	@StoredProcedure("CALL echoNumberProc(?,?)")
 	@StoredProcedureResult({ @FieldResult(name = "value", position = 2, type=Double.class)})

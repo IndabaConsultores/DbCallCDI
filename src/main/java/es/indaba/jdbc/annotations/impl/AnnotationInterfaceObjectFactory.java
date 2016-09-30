@@ -52,6 +52,10 @@ public class AnnotationInterfaceObjectFactory<T> {
 
 				delegate.doWork(callWork);
 
+				if (callWork.getWorkException()!=null) {
+					throw callWork.getWorkException();
+				}
+				
 				return callWork.getResultObject();
 			}
 		});
