@@ -11,7 +11,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>es.indaba</groupId>
 	<artifactId>DbCallCDI</artifactId>
-	<version>1.4</version>
+	<version>1.5</version>
 	<name>DB Call CDI Extension</name>
 	<description>A CDI Extension to call stored procedures or database functions declaratively using hibernate.</description>
 	<url>https://github.com/IndabaConsultores/DbCallCDI</url>
@@ -138,6 +138,12 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>${postgresql.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>11.2.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency><!-- Log4j2 SLF4J Binding -->

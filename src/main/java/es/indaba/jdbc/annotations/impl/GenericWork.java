@@ -18,7 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.hibernate.jdbc.Work;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -126,7 +126,9 @@ public class GenericWork implements Work {
 					} else {
 						result = SQLTypeMapping.getSqlResult(st, field.type(), field.sqlType(), field.position());
 					}
-					BeanUtils.setProperty(resultObject, property, result);
+					if(result != null){
+						PropertyUtils.setProperty(resultObject, property, result);
+					}
 				}
 			}
 		} catch (Exception e) {
