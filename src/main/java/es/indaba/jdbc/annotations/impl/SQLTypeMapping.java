@@ -176,9 +176,10 @@ public class SQLTypeMapping {
 		}
 	}
      
-	public static <T> T getSqlResult(CallableStatement cs, Class<T> javaType,int position) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public static <T> T getSqlResult(CallableStatement cs, Class<T> javaType,int position) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, SQLException {
 		Method getter = java2Getter.get(javaType);
 		Object result = getter.invoke(cs, position);
+		result = cs.wasNull() ? null : result;
 		if (result instanceof java.sql.Date) {
 			result = new java.util.Date(((java.sql.Date) result).getTime());
 		}
@@ -193,12 +194,13 @@ public class SQLTypeMapping {
 		}
 	}
      
-	public static <T> T getSqlResultsetResult(ResultSet rs, Class<T> javaType,int position) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+	public static <T> T getSqlResultsetResult(ResultSet rs, Class<T> javaType,int position) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, SQLException {
 		Method getter = java2Getter.get(javaType);
 		String methodName = getter.getName();
 		Class rsClass = ResultSet.class;
 		getter = rsClass.getMethod(methodName, int.class);
 		Object result = getter.invoke(rs, position);
+		result = rs.wasNull() ? null : result;
 		if (result instanceof java.sql.Date) {
 			result = new java.util.Date(((java.sql.Date) result).getTime());
 		}
