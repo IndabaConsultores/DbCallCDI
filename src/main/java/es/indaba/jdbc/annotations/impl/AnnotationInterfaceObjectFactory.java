@@ -36,7 +36,6 @@ public class AnnotationInterfaceObjectFactory<T> {
 		ProxyFactory factory = new ProxyFactory();
 		factory.setInterfaces(new Class[] { type });
 		factory.setHandler(new MethodHandler() {
-			@Override
 			public Object invoke(Object arg0, Method method, Method arg2, Object[] parameters) throws Throwable {
 				BeanManager beanManager = BeanManagerProvider.getInstance().getBeanManager();
 				Annotation[] annotations = method.getAnnotations();
@@ -57,7 +56,6 @@ public class AnnotationInterfaceObjectFactory<T> {
 				return callWork.getResultObject();
 			}
 		});
-
 		Class c = factory.createClass();
 		return c;
 	}
