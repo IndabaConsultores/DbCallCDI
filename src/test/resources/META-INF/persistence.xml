@@ -1,58 +1,60 @@
 <!--
-     This program is free software: you can redistribute it and/or modify it under
-     the terms of the GNU Lesser General Public License as published by the Free
-     Software Foundation, either version 3 of the License, or (at your option) any
-     later version. This program is distributed in the hope that it will be
-     useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-     Public License for more details. You should have received a copy of the GNU
-     Lesser General Public License along with this program. If not, see
-     <http://www.gnu.org/licenses/>
-     
- -->
-<persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd" version="2.0">
-  <persistence-unit name="defaultPersistence" transaction-type="RESOURCE_LOCAL">
-  	<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<properties>
-			<property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
-			<property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:mem:standalone"/>
-			<property name="javax.persistence.jdbc.user" value="sa"/>
-			<property name="javax.persistence.jdbc.password" value=""/>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
-			<property name="hibernate.hbm2ddl.auto" value="create"/>
-			<property name="hibernate.hbm2ddl.import_files" value="/sql/import-default.sql"/>
-			<property name="hibernate.show_sql" value="true"/>
-			<property name="hibernate.format_sql" value="false"/>
-		</properties>
-  </persistence-unit>
-  <persistence-unit name="secondPersistence" transaction-type="RESOURCE_LOCAL">
-  	<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<properties>
-			<property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
-			<property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:mem:standalone2"/>
-			<property name="javax.persistence.jdbc.user" value="sa"/>
-			<property name="javax.persistence.jdbc.password" value=""/>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
-			<property name="hibernate.hbm2ddl.auto" value="create"/>
-			<property name="hibernate.hbm2ddl.import_files" value="/sql/import-second.sql"/>
-			<property name="hibernate.show_sql" value="true"/>
-			<property name="hibernate.format_sql" value="false"/>
-		</properties>
-  </persistence-unit>
+    This program is free software: you can redistribute it and/or modify it under
+    the terms of the GNU Lesser General Public License as published by the Free
+    Software Foundation, either version 3 of the License, or (at your option) any
+    later version. This program is distributed in the hope that it will be
+    useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details. You should have received a copy of the GNU
+    Lesser General Public License along with this program. If not, see
+    <http://www.gnu.org/licenses/>
+
+-->
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+    version="2.0">
+    <persistence-unit name="defaultPersistence" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:mem:standalone" />
+            <property name="javax.persistence.jdbc.user" value="sa" />
+            <property name="javax.persistence.jdbc.password" value="" />
+            <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
+            <property name="hibernate.hbm2ddl.auto" value="create" />
+            <property name="hibernate.hbm2ddl.import_files" value="/sql/import-default.sql" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="false" />
+        </properties>
+    </persistence-unit>
+    <persistence-unit name="secondPersistence" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:mem:standalone2" />
+            <property name="javax.persistence.jdbc.user" value="sa" />
+            <property name="javax.persistence.jdbc.password" value="" />
+            <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
+            <property name="hibernate.hbm2ddl.auto" value="create" />
+            <property name="hibernate.hbm2ddl.import_files" value="/sql/import-second.sql" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="false" />
+        </properties>
+    </persistence-unit>
     <persistence-unit name="postgrePersistence" transaction-type="RESOURCE_LOCAL">
-  	<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<properties>
-			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://horton.elephantsql.com:5432/rrcojohw"/>
-			<property name="javax.persistence.jdbc.user" value="rrcojohw"/>
-			<property name="javax.persistence.jdbc.password" value="bh1yoT0Rbs371RsgUC1cP_ydiUTixC_X"/>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-			<property name="hibernate.hbm2ddl.auto" value="create"/>
-			<property name="hibernate.hbm2ddl.import_files" value="/sql/import-postgre.sql"/>
-			<property name="hibernate.show_sql" value="true"/>
-			<property name="hibernate.format_sql" value="false"/>
-			<property name="hibernate.temp.use_jdbc_metadata_defaults" value="false"/>
-			<property name="hibernate.jdbc.lob.non_contextual_creation" value="true"/>
-		</properties>
-  </persistence-unit>
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://horton.elephantsql.com:5432/rrcojohw" />
+            <property name="javax.persistence.jdbc.user" value="rrcojohw" />
+            <property name="javax.persistence.jdbc.password" value="bh1yoT0Rbs371RsgUC1cP_ydiUTixC_X" />
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+            <property name="hibernate.hbm2ddl.auto" value="create" />
+            <property name="hibernate.hbm2ddl.import_files" value="/sql/import-postgre.sql" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="false" />
+            <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" />
+            <property name="hibernate.jdbc.lob.non_contextual_creation" value="true" />
+        </properties>
+    </persistence-unit>
 </persistence>
