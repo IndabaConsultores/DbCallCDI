@@ -63,7 +63,7 @@ public class PostgreSQLTest {
 
 
     @Test
-    public void stringTest() throws Exception {
+    public void testString() throws Exception {
         String testVal = "testVal";
         PostgreDBTester dbTester = BeanProvider.getContextualReference(PostgreDBTester.class, false);
         ProcedureResult<String> result = dbTester.callEchoAsFunction(testVal);

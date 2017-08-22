@@ -27,7 +27,7 @@ import es.indaba.jdbc.test.result.ProcedureResult;
 public class StoredProceduresTest extends AbstractTest {
 
     @Test
-    public void emptyTest() throws Exception {
+    public void testEmpty() throws Exception {
         DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
         ProcedureResult<String> result = dbTester.callEchoEmptyAsFunction();
         assertNotNull(result);
@@ -38,7 +38,7 @@ public class StoredProceduresTest extends AbstractTest {
     }
 
     @Test
-    public void stringTest() throws Exception {
+    public void testString() throws Exception {
         String testVal = "testVal";
         DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
         ProcedureResult<String> result = dbTester.callEchoAsFunction(testVal);
@@ -51,7 +51,7 @@ public class StoredProceduresTest extends AbstractTest {
     }
 
     @Test
-    public void longTest() throws Exception {
+    public void testLong() throws Exception {
         Long testVal = 1l;
         DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
         ProcedureResult<Long> result = dbTester.callEchoPrimitiveNumberAsFunction(testVal);
@@ -64,7 +64,7 @@ public class StoredProceduresTest extends AbstractTest {
     }
 
     @Test
-    public void primitiveLongTest() throws Exception {
+    public void testPrimitiveLong() throws Exception {
         long testVal = 1l;
         DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
         ProcedureResult<Long> result = dbTester.callEchoNumberAsFunction(testVal);
@@ -89,7 +89,7 @@ public class StoredProceduresTest extends AbstractTest {
     // }
 
     @Test
-    public void doubleTest() throws Exception {
+    public void testDouble() throws Exception {
         Double testVal = 1.2d;
         DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
         ProcedureResult<Double> result = dbTester.callEchoNumberAsFunction(testVal);
@@ -102,7 +102,7 @@ public class StoredProceduresTest extends AbstractTest {
     }
 
     @Test
-    public void dateTest() throws Exception {
+    public void testDate() throws Exception {
         Date testVal = new Date();
         DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
         ProcedureResult<Date> result = dbTester.callEchoDateAsFunction(testVal);
@@ -117,7 +117,7 @@ public class StoredProceduresTest extends AbstractTest {
     }
 
     @Test
-    public void timeTest() throws Exception {
+    public void testTime() throws Exception {
         Calendar testCal = Calendar.getInstance();
         Date testVal = testCal.getTime();
         DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
@@ -141,7 +141,7 @@ public class StoredProceduresTest extends AbstractTest {
     }
 
     @Test
-    public void timeStampTest() throws Exception {
+    public void testTimestamp() throws Exception {
         Date testVal = new Date();
         DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
         ProcedureResult<Date> result = dbTester.callEchoTimestampAsFunction(testVal);
@@ -154,7 +154,7 @@ public class StoredProceduresTest extends AbstractTest {
     }
 
     @Test
-    public void echoEMTest() throws Exception {
+    public void testEchoEM() throws Exception {
         DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
         ProcedureResult<String> result = dbTester.callEchoEM();
         assertNotNull(result);
@@ -162,7 +162,7 @@ public class StoredProceduresTest extends AbstractTest {
     }
 
     @Test
-    public void echoEMTestSecond() throws Exception {
+    public void testEchoEMSecond() throws Exception {
         DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
         ProcedureResult<String> result = dbTester.callEchoEMSecond();
         assertNotNull(result);

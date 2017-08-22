@@ -27,7 +27,7 @@ import es.indaba.jdbc.test.result.ProcedureResult;
 public class InterceptorTest extends AbstractTest {
 
     @Test
-    public void emptyTest() throws Exception {
+    public void testEmpty() throws Exception {
         TestBean testService = BeanProvider.getContextualReference(TestBean.class, false);
         ProcedureResult<String> result = testService.callEchoEmptyAsFunction();
         assertNotNull(result);
@@ -38,7 +38,7 @@ public class InterceptorTest extends AbstractTest {
     }
 
     @Test
-    public void stringTest() throws Exception {
+    public void testString() throws Exception {
         String testVal = "testVal";
         TestBean testService = BeanProvider.getContextualReference(TestBean.class, false);
         ProcedureResult<String> result = testService.callEchoAsFunction(testVal);
@@ -51,7 +51,7 @@ public class InterceptorTest extends AbstractTest {
     }
 
     @Test
-    public void longTest() throws Exception {
+    public void testLong() throws Exception {
         Long testVal = 1l;
         TestBean testService = BeanProvider.getContextualReference(TestBean.class, false);
         ProcedureResult<Long> result = testService.callEchoNumberAsFunction(testVal);
@@ -64,7 +64,7 @@ public class InterceptorTest extends AbstractTest {
     }
 
     @Test
-    public void dateTest() throws Exception {
+    public void testDate() throws Exception {
         Date testVal = new Date();
         TestBean testService = BeanProvider.getContextualReference(TestBean.class, false);
         ProcedureResult<Date> result = testService.callEchoDateAsFunction(testVal);
@@ -79,7 +79,7 @@ public class InterceptorTest extends AbstractTest {
     }
 
     @Test
-    public void timeTest() throws Exception {
+    public void testTime() throws Exception {
         Calendar testCal = Calendar.getInstance();
         Date testVal = testCal.getTime();
         TestBean testService = BeanProvider.getContextualReference(TestBean.class, false);
@@ -103,7 +103,7 @@ public class InterceptorTest extends AbstractTest {
     }
 
     @Test
-    public void timeStampTest() throws Exception {
+    public void testTimestamp() throws Exception {
         Date testVal = new Date();
         TestBean testService = BeanProvider.getContextualReference(TestBean.class, false);
         ProcedureResult<Date> result = testService.callEchoTimestampAsFunction(testVal);
@@ -116,7 +116,7 @@ public class InterceptorTest extends AbstractTest {
     }
 
     @Test
-    public void echoEMTest() throws Exception {
+    public void testEchoEM() throws Exception {
         TestBean testService = BeanProvider.getContextualReference(TestBean.class, false);
         ProcedureResult<String> result = testService.callEchoEM();
         assertNotNull(result);
@@ -124,7 +124,7 @@ public class InterceptorTest extends AbstractTest {
     }
 
     @Test
-    public void echoEMTestSecond() throws Exception {
+    public void testEchoEMSecond() throws Exception {
         TestBean testService = BeanProvider.getContextualReference(TestBean.class, false);
         ProcedureResult<String> result = testService.callEchoEMSecond();
         assertNotNull(result);
