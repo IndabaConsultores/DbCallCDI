@@ -32,12 +32,12 @@ public class GenericWork implements Work {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(GenericWork.class);
 
-	StoredProcedure procedure;
-	StoredProcedureResult proceduresResult;
-	List<SQLParameter> parameters;
-	Class returnType;
-	Object resultObject;
-	Exception workException;
+	private StoredProcedure procedure;
+	private StoredProcedureResult proceduresResult;
+	private List<SQLParameter> parameters;
+	private Class returnType;
+	private Object resultObject;
+	private Exception workException;
 
 	public StoredProcedure getProcedure() {
 		return procedure;

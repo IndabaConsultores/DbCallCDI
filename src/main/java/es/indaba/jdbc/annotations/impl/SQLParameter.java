@@ -15,10 +15,10 @@ package es.indaba.jdbc.annotations.impl;
 @SuppressWarnings("rawtypes")
 public class SQLParameter {
 
-	Class type;
-	Class sqlType;
-	Object value;
-	int position;
+	private Class type;
+	private Class sqlType;
+	private Object value;
+	private int position;
 
 	public Class getType() {
 		return type;
