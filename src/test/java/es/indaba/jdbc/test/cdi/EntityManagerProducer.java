@@ -1,14 +1,11 @@
 /*******************************************************************************
- *  This program is free software: you can redistribute it and/or modify it under
- *  the terms of the GNU Lesser General Public License as published by the Free
- *  Software Foundation, either version 3 of the License, or (at your option) any
- *  later version. This program is distributed in the hope that it will be
- *  useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
- *  Public License for more details. You should have received a copy of the GNU
- *  Lesser General Public License along with this program. If not, see
- *  <http://www.gnu.org/licenses/>
- *  
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General
+ * Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+ * later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details. You should have received a copy of the GNU Lesser General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/>
+ * 
  *******************************************************************************/
 package es.indaba.jdbc.test.cdi;
 
@@ -25,39 +22,39 @@ import javax.persistence.Persistence;
 public class EntityManagerProducer {
 
     private EntityManagerFactory entityManagerFactory;
-	private EntityManagerFactory secondEntityManagerFactory;
-	private EntityManagerFactory postgreEntityManagerFactory;
-    
+    private EntityManagerFactory secondEntityManagerFactory;
+    private EntityManagerFactory postgreEntityManagerFactory;
+
     @Produces
     @ApplicationScoped
     @Default
     public EntityManager getEntityManagerDefault() {
-    	if(entityManagerFactory == null){
-    		entityManagerFactory = Persistence.createEntityManagerFactory("defaultPersistence");
-    	}
+        if (entityManagerFactory == null) {
+            entityManagerFactory = Persistence.createEntityManagerFactory("defaultPersistence");
+        }
         return entityManagerFactory.createEntityManager();
     }
-    
+
     @Produces
     @ApplicationScoped
     @SecondEM
     public EntityManager getEntityManagerSecond() {
-    	if(secondEntityManagerFactory == null){
-    		secondEntityManagerFactory = Persistence.createEntityManagerFactory("secondPersistence");
-    	}
+        if (secondEntityManagerFactory == null) {
+            secondEntityManagerFactory = Persistence.createEntityManagerFactory("secondPersistence");
+        }
         return secondEntityManagerFactory.createEntityManager();
     }
-    
+
     @Produces
     @ApplicationScoped
     @PostgreSQL
     public EntityManager getEntityManagerPostgre() {
-    	if(postgreEntityManagerFactory == null){
-    		postgreEntityManagerFactory = Persistence.createEntityManagerFactory("postgrePersistence");
-    	}
+        if (postgreEntityManagerFactory == null) {
+            postgreEntityManagerFactory = Persistence.createEntityManagerFactory("postgrePersistence");
+        }
         return postgreEntityManagerFactory.createEntityManager();
     }
-    
+
     public void close(@Disposes @Any EntityManager em) {
         if (em.isOpen()) {
             em.close();

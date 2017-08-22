@@ -1,14 +1,11 @@
 /*******************************************************************************
- *  This program is free software: you can redistribute it and/or modify it under
- *  the terms of the GNU Lesser General Public License as published by the Free
- *  Software Foundation, either version 3 of the License, or (at your option) any
- *  later version. This program is distributed in the hope that it will be
- *  useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
- *  Public License for more details. You should have received a copy of the GNU
- *  Lesser General Public License along with this program. If not, see
- *  <http://www.gnu.org/licenses/>
- *  
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General
+ * Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+ * later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details. You should have received a copy of the GNU Lesser General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/>
+ * 
  *******************************************************************************/
 package es.indaba.jdbc.annotations.extension;
 
@@ -32,36 +29,35 @@ import es.indaba.jdbc.annotations.impl.AnnotationInterfaceObjectFactory;
 /**
  * JDBC CDI extension
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class CDIExtension implements javax.enterprise.inject.spi.Extension {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(CDIExtension.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CDIExtension.class);
 
-	private final Set<Bean> beans = new HashSet<>();
+    private final Set<Bean> beans = new HashSet<>();
 
-	public <T> void processAnnotatedType(@WithAnnotations(DatabaseCall.class) @Observes ProcessAnnotatedType<T> pat, BeanManager bm) {
-		Class type = pat.getAnnotatedType().getJavaClass();
-		if (type.isInterface()) {
-			LOGGER.info("DBCallCDI Module - Type detected!! {}", pat.getAnnotatedType().getBaseType());
+    public <T> void processAnnotatedType(@WithAnnotations(DatabaseCall.class) @Observes ProcessAnnotatedType<T> pat,
+            BeanManager bm) {
+        Class type = pat.getAnnotatedType().getJavaClass();
+        if (type.isInterface()) {
+            LOGGER.info("DBCallCDI Module - Type detected!! {}", pat.getAnnotatedType().getBaseType());
 
-			AnnotationInterfaceObjectFactory factory = new AnnotationInterfaceObjectFactory();
+            AnnotationInterfaceObjectFactory factory = new AnnotationInterfaceObjectFactory();
 
-			Class clazz = factory.buildClass(type);
-			final BeanBuilder<Object> beanBuilder = new BeanBuilder<Object>(
-					bm).passivationCapable(false).beanClass(clazz)
-					.name(type.getName())
-					.types(pat.getAnnotatedType().getBaseType())
-					.beanLifecycle(new ContextualFactory<Object>(clazz));
-			beans.add(beanBuilder.create());
-		}
-	}
+            Class clazz = factory.buildClass(type);
+            final BeanBuilder<Object> beanBuilder = new BeanBuilder<Object>(bm).passivationCapable(false)
+                    .beanClass(clazz).name(type.getName()).types(pat.getAnnotatedType().getBaseType())
+                    .beanLifecycle(new ContextualFactory<Object>(clazz));
+            beans.add(beanBuilder.create());
+        }
+    }
 
-	public void afterBeanDiscovery(@Observes AfterBeanDiscovery abd) {
-		LOGGER.info("DBCallCDI Module - Activated");
-		for (Bean bean : this.beans) {
-			LOGGER.info("DBCallCDI Module - DBCall discovered: {}", bean.getName());
-			abd.addBean(bean);
-		}
-		this.beans.clear();
-	}
+    public void afterBeanDiscovery(@Observes AfterBeanDiscovery abd) {
+        LOGGER.info("DBCallCDI Module - Activated");
+        for (Bean bean : this.beans) {
+            LOGGER.info("DBCallCDI Module - DBCall discovered: {}", bean.getName());
+            abd.addBean(bean);
+        }
+        this.beans.clear();
+    }
 }

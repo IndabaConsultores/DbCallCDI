@@ -13,14 +13,14 @@ import es.indaba.jdbc.test.result.ProcedureResult;
 @ApplicationScoped
 public interface PostgreDBTester {
 
-	@StoredProcedure("{ ? = call echo( ? ) }")
-	@StoredProcedureResult({ @FieldResult(name = "value", position = 1) })
-	@DatabaseCall(qualifier=PostgreSQL.class)
-	public ProcedureResult<String> callEchoAsFunction(@StoredProcedureParameter(2) String name) throws Exception;
-	
-	@StoredProcedure("{call echoProc(?,?)}")
-	@StoredProcedureResult({ @FieldResult(name = "value", position = 2) })
-	@DatabaseCall(qualifier=PostgreSQL.class)
-	public ProcedureResult<String> callEchoAsProcedure(@StoredProcedureParameter(1) String name) throws Exception;
+    @StoredProcedure("{ ? = call echo( ? ) }")
+    @StoredProcedureResult({@FieldResult(name = "value", position = 1)})
+    @DatabaseCall(qualifier = PostgreSQL.class)
+    public ProcedureResult<String> callEchoAsFunction(@StoredProcedureParameter(2) String name) throws Exception;
+
+    @StoredProcedure("{call echoProc(?,?)}")
+    @StoredProcedureResult({@FieldResult(name = "value", position = 2)})
+    @DatabaseCall(qualifier = PostgreSQL.class)
+    public ProcedureResult<String> callEchoAsProcedure(@StoredProcedureParameter(1) String name) throws Exception;
 
 }
