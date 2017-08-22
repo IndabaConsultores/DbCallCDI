@@ -89,10 +89,21 @@ public interface DBTester {
     @DatabaseCall
     public ProcedureResult<Date> callEchoDateAsFunction(@StoredProcedureParameter(1) Date name) throws Exception;
 
+    @StoredProcedure("CALL echoDate(?)")
+    @StoredProcedureResult({@FieldResult(name = "value", position = FieldResult.RESULTSET, type = Date.class)})
+    @DatabaseCall
+    public ProcedureResult<Date> callEchoSQLDateAsFunction(@StoredProcedureParameter(1) java.sql.Date name) throws Exception;
+
+    
     @StoredProcedure("CALL echoDateProc(?,?)")
     @StoredProcedureResult({@FieldResult(name = "value", position = 2, type = Date.class)})
     @DatabaseCall
     public ProcedureResult<Date> callEchoDateAsProcedure(@StoredProcedureParameter(1) Date name) throws Exception;
+    
+    @StoredProcedure("CALL echoDateProc(?,?)")
+    @StoredProcedureResult({@FieldResult(name = "value", position = 2, type = Date.class)})
+    @DatabaseCall
+    public ProcedureResult<Date> callEchoSQLDateAsProcedure(@StoredProcedureParameter(1) java.sql.Date name) throws Exception;
 
     @StoredProcedure("CALL echoTime(?)")
     @StoredProcedureResult({@FieldResult(name = "value", position = FieldResult.RESULTSET, type = Date.class,

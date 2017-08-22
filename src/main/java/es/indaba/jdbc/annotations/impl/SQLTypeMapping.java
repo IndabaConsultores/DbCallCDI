@@ -78,6 +78,7 @@ public final class SQLTypeMapping {
             java2Setter.put(boolean.class, setter);
             setter = c.getMethod("setDate", int.class, java.sql.Date.class);
             java2Setter.put(java.util.Date.class, setter);
+            java2Setter.put(java.sql.Date.class, setter);
             setter = c.getMethod("setTimestamp", int.class, java.sql.Timestamp.class);
             java2Setter.put(java.util.Calendar.class, setter);
             setter = c.getMethod("setInt", int.class, int.class);
@@ -107,6 +108,7 @@ public final class SQLTypeMapping {
             java2Getter.put(boolean.class, getter);
             getter = c.getMethod("getDate", int.class);
             java2Getter.put(java.util.Date.class, getter);
+            java2Getter.put(java.sql.Date.class, getter);
             getter = c.getMethod("getTimestamp", int.class);
             java2Getter.put(java.util.Calendar.class, getter);
             getter = c.getMethod("getInt", int.class);

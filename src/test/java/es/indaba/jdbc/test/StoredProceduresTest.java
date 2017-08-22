@@ -140,6 +140,21 @@ public class StoredProceduresTest extends AbstractTest {
         assertEquals(DateUtils.truncate(testVal, Calendar.DAY_OF_MONTH),
                 DateUtils.truncate(result.getValue(), Calendar.DAY_OF_MONTH));
     }
+    
+    @Test
+    public void testSQLDate() throws Exception {
+        java.sql.Date testVal = new java.sql.Date(System.currentTimeMillis());
+        DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
+        ProcedureResult<Date> result = dbTester.callEchoSQLDateAsFunction(testVal);
+        assertNotNull(result);
+        assertEquals(DateUtils.truncate(testVal, Calendar.DAY_OF_MONTH),
+                DateUtils.truncate(result.getValue(), Calendar.DAY_OF_MONTH));
+
+        result = dbTester.callEchoSQLDateAsProcedure(testVal);
+        assertNotNull(result);
+        assertEquals(DateUtils.truncate(testVal, Calendar.DAY_OF_MONTH),
+                DateUtils.truncate(result.getValue(), Calendar.DAY_OF_MONTH));
+    }
 
     @Test
     public void testTime() throws Exception {

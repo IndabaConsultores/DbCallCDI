@@ -39,11 +39,9 @@ public class AnnotationInterfaceObjectFactory<T> {
                 final Annotation[] annotations = method.getAnnotations();
                 final DatabaseCall dbCall =
                         AnnotationUtils.findAnnotation(beanManager, annotations, DatabaseCall.class);
-                if (dbCall == null) {
-                    return null;
-                }
+
                 final GenericWork callWork = AnnotationProcessor.buildWork(method, parameters);
-               
+
                 final EntityManager manager = BeanProvider.getContextualReference(EntityManager.class, false,
                         AnnotationInstanceProvider.of(dbCall.qualifier()));
                 final Session delegate = (Session) manager.getDelegate();
