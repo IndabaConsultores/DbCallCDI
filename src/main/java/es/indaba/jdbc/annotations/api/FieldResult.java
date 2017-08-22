@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface FieldResult {
 
-    public static int RESULTSET = 0;
+    int RESULTSET = 0;
 
     /**
      * @return Name of the property of the returning type.
