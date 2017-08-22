@@ -14,6 +14,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -26,6 +27,13 @@ import es.indaba.jdbc.test.result.ProcedureResult;
 
 public class InterceptorTest extends AbstractTest {
 
+    @Test(expected = SQLException.class)
+    public void testWorkException() throws Exception {
+        TestBean testService = BeanProvider.getContextualReference(TestBean.class, false);
+        testService.callNotExistingAsFunction();
+    }
+
+    
     @Test
     public void testEmpty() throws Exception {
         TestBean testService = BeanProvider.getContextualReference(TestBean.class, false);

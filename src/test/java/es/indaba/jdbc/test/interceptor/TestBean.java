@@ -29,6 +29,13 @@ public class TestBean {
     @Inject
     EntityManager manager;
 
+    @StoredProcedure("CALL notExistingOperation()")
+    @StoredProcedureResult({@FieldResult(name = "value", position = FieldResult.RESULTSET)})
+    @DatabaseCall
+    public ProcedureResult<String> callNotExistingAsFunction() throws Exception {
+        return null;
+    }
+    
     @StoredProcedure("CALL echoEmpty()")
     @StoredProcedureResult({@FieldResult(name = "value", position = FieldResult.RESULTSET)})
     @DatabaseCall
