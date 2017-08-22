@@ -12,7 +12,6 @@
  *******************************************************************************/
 package es.indaba.jdbc.annotations.impl;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
@@ -25,7 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public abstract class SQLTypeMapping {
+public class SQLTypeMapping {
 	
 	private static final Logger LOGGER = Logger.getLogger(SQLTypeMapping.class.getName());
 	
