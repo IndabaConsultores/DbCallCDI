@@ -11,7 +11,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>es.indaba</groupId>
 	<artifactId>DbCallCDI</artifactId>
-	<version>1.6</version>
+	<version>1.7-SNAPSHOT</version>
 	<name>DB Call CDI Extension</name>
 	<description>A CDI Extension to call stored procedures or database functions declaratively using hibernate.</description>
 	<url>https://github.com/IndabaConsultores/DbCallCDI</url>
