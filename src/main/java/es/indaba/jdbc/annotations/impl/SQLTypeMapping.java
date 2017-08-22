@@ -145,7 +145,7 @@ public abstract class SQLTypeMapping {
 		return java2SQL.get(c);
 	}
 
-	public static <T> void setSqlParameter(CallableStatement cs, Class<T> javaType, Class<? extends java.util.Date> sqlType, int position, T value) throws SQLException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public static <T> void setSqlParameter(CallableStatement cs, Class<T> javaType, Class<? extends java.util.Date> sqlType, int position, T value) throws SQLException, ReflectiveOperationException {
 		if (sqlType == null || sqlType.equals(Object.class)) {
 			setSqlParameter(cs, javaType, position, value);
 		} else {
@@ -163,7 +163,7 @@ public abstract class SQLTypeMapping {
 		}
 	}
 	  
-	public static <T> void setSqlParameter(CallableStatement cs, Class<T> javaType,int position, T value) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public static <T> void setSqlParameter(CallableStatement cs, Class<T> javaType,int position, T value) throws ReflectiveOperationException {
 		Object convertedValue = null;
 		if (value instanceof java.util.Date) {
 			convertedValue = (T) new java.sql.Date(((java.util.Date) value).getTime());
@@ -172,7 +172,7 @@ public abstract class SQLTypeMapping {
 		setter.invoke(cs, position, convertedValue == null ? value : convertedValue);
 	}
 
-	public static <T> T getSqlResult(CallableStatement cs, Class<T> javaType, Class<? extends java.util.Date> sqlType, int position) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, SQLException {
+	public static <T> T getSqlResult(CallableStatement cs, Class<T> javaType, Class<? extends java.util.Date> sqlType, int position) throws  SQLException, ReflectiveOperationException {
 		if (sqlType == null || sqlType.equals(Object.class)) {
 			return getSqlResult(cs, javaType, position);
 		} else {
@@ -180,7 +180,7 @@ public abstract class SQLTypeMapping {
 		}
 	}
      
-	public static <T> T getSqlResult(CallableStatement cs, Class<T> javaType,int position) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, SQLException {
+	public static <T> T getSqlResult(CallableStatement cs, Class<T> javaType,int position) throws SQLException, ReflectiveOperationException {
 		Method getter = java2Getter.get(javaType);
 		Object result = getter.invoke(cs, position);
 		result = cs.wasNull() ? null : result;
@@ -190,7 +190,7 @@ public abstract class SQLTypeMapping {
 		return (T) result;
 	}
 
-	public static <T> T getSqlResultsetResult(ResultSet rs, Class<T> javaType, Class<? extends java.util.Date> sqlType, int position) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, SQLException {
+	public static <T> T getSqlResultsetResult(ResultSet rs, Class<T> javaType, Class<? extends java.util.Date> sqlType, int position) throws SQLException, ReflectiveOperationException {
 		if (sqlType == null || sqlType.equals(Object.class)) {
 			return getSqlResultsetResult(rs, javaType, position);
 		} else {
@@ -198,7 +198,7 @@ public abstract class SQLTypeMapping {
 		}
 	}
      
-	public static <T> T getSqlResultsetResult(ResultSet rs, Class<T> javaType,int position) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, SQLException {
+	public static <T> T getSqlResultsetResult(ResultSet rs, Class<T> javaType,int position) throws SQLException, ReflectiveOperationException {
 		Method getter = java2Getter.get(javaType);
 		String methodName = getter.getName();
 		Class rsClass = ResultSet.class;
