@@ -54,8 +54,7 @@ public class AnnotationInterfaceObjectFactory<T> {
                 return callWork.getResultObject();
             }
         });
-        Class c = factory.createClass();
-        return c;
+        return factory.createClass();
     }
 
     @SuppressWarnings("unchecked")
