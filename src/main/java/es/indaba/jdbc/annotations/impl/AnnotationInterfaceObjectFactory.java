@@ -36,8 +36,8 @@ public class AnnotationInterfaceObjectFactory<T> {
 		ProxyFactory factory = new ProxyFactory();
 		factory.setInterfaces(new Class[] { type });
 		factory.setHandler(new MethodHandler() {
-
-			public Object invoke(Object arg0, Method method, Method arg2, Object[] parameters) throws Exception {
+			@Override
+			public Object invoke(Object arg0, Method method, Method arg2, Object[] parameters) throws Throwable {
 				BeanManager beanManager = BeanManagerProvider.getInstance().getBeanManager();
 				Annotation[] annotations = method.getAnnotations();
 				DatabaseCall dbCall = AnnotationUtils.findAnnotation(beanManager,annotations, DatabaseCall.class);
@@ -48,7 +48,6 @@ public class AnnotationInterfaceObjectFactory<T> {
 				if (callWork == null) {
 					return null;
 				}
-				// Get EM based on provided qualifier
 				EntityManager manager = BeanProvider.getContextualReference(EntityManager.class,false,AnnotationInstanceProvider.of(dbCall.qualifier()));
 				Session delegate = (Session) manager.getDelegate();
 				delegate.doWork(callWork);
