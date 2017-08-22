@@ -24,7 +24,7 @@ public class ContextualFactory<T> implements ContextualLifecycle<T> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ContextualFactory.class);
 	
 	@SuppressWarnings("rawtypes")
-	private Class derivedClass;
+	private final Class derivedClass;
 
 	@SuppressWarnings("rawtypes")
 	public ContextualFactory(Class t) {
