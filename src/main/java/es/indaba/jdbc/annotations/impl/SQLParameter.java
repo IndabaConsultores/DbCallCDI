@@ -10,7 +10,7 @@
 package es.indaba.jdbc.annotations.impl;
 
 @SuppressWarnings("rawtypes")
-public class SQLParameter {
+public final class SQLParameter {
 
     private Class type;
     private Class sqlType;

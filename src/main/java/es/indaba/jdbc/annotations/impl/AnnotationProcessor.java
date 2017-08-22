@@ -25,9 +25,11 @@ import es.indaba.jdbc.annotations.api.StoredProcedure;
 import es.indaba.jdbc.annotations.api.StoredProcedureParameter;
 import es.indaba.jdbc.annotations.api.StoredProcedureResult;
 
-public class AnnotationProcessor {
+public final class AnnotationProcessor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnotationProcessor.class);
+
+    private AnnotationProcessor() {}
 
     @SuppressWarnings("rawtypes")
     public static GenericWork buildWork(Method method, Object[] parameters) {
@@ -81,7 +83,5 @@ public class AnnotationProcessor {
         return work;
     }
 
-    private AnnotationProcessor() {
 
-    }
 }
