@@ -37,7 +37,7 @@ public class CDIExtension implements javax.enterprise.inject.spi.Extension {
 
 	private static final Logger logger = LoggerFactory.getLogger(CDIExtension.class);
 
-	private final Set<Bean> beans = new HashSet<Bean>();
+	private final Set<Bean> beans = new HashSet<>();
 
 	public <T> void processAnnotatedType(@WithAnnotations(DatabaseCall.class) @Observes ProcessAnnotatedType<T> pat, BeanManager bm) {
 		Class type = pat.getAnnotatedType().getJavaClass();

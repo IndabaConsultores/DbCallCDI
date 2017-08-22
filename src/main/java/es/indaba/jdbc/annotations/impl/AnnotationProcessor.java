@@ -49,7 +49,7 @@ public class AnnotationProcessor {
 		}
 		logger.debug("DBCallCDI - Preparing call for procedure {} ", sProc.value());
 
-		LinkedList<SQLParameter> params = new LinkedList<SQLParameter>();
+		LinkedList<SQLParameter> params = new LinkedList<>();
 
 		int idx = 0;
 		for (Parameter param : method.getParameters()) {
