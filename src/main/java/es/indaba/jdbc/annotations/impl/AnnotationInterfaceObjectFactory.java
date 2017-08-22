@@ -42,10 +42,14 @@ public class AnnotationInterfaceObjectFactory<T> {
 				BeanManager beanManager = BeanManagerProvider.getInstance().getBeanManager();
 				Annotation[] annotations = method.getAnnotations();
 				DatabaseCall dbCall = AnnotationUtils.findAnnotation(beanManager,annotations, DatabaseCall.class);
-				if (dbCall == null) return null;
+				if (dbCall == null) {
+					return null;
+				}
 				
 				GenericWork callWork = AnnotationProcessor.buildWork(method, parameters);
-				if (callWork == null) return null;
+				if (callWork == null) {
+					return null;
+				}
 				// Get EM based on provided qualifier
 				EntityManager manager = BeanProvider.getContextualReference(EntityManager.class,false,AnnotationInstanceProvider.of(dbCall.qualifier()));
 				Session delegate = (Session) manager.getDelegate();

@@ -39,7 +39,9 @@ public class StoredProcedureInterceptor {
 		BeanManager beanManager = BeanManagerProvider.getInstance().getBeanManager();
 		Annotation[] annotations = invocationContext.getMethod().getAnnotations();
 		DatabaseCall dbCall = AnnotationUtils.findAnnotation(beanManager,annotations, DatabaseCall.class);
-		if (dbCall == null) return null;
+		if (dbCall == null) {
+			return null;
+		}
 		
 		GenericWork callWork = AnnotationProcessor.buildWork(invocationContext.getMethod(), invocationContext.getParameters());
 

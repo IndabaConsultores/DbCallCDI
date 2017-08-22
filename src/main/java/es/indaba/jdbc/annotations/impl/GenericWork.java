@@ -29,7 +29,7 @@ import es.indaba.jdbc.annotations.api.StoredProcedureResult;
 
 @SuppressWarnings("rawtypes")
 public class GenericWork implements Work {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(GenericWork.class);
 
 	StoredProcedure procedure;
@@ -38,7 +38,6 @@ public class GenericWork implements Work {
 	Class returnType;
 	Object resultObject;
 	Exception workException;
-	
 
 	public StoredProcedure getProcedure() {
 		return procedure;
@@ -71,7 +70,7 @@ public class GenericWork implements Work {
 	public void setReturnType(Class returnType) {
 		this.returnType = returnType;
 	}
-	
+
 	public Exception getWorkException() {
 		return workException;
 	}
@@ -81,7 +80,7 @@ public class GenericWork implements Work {
 	public void execute(Connection con) throws SQLException {
 		String procedureCall = procedure.value();
 		FieldResult[] fields = proceduresResult == null ? new FieldResult[0] : proceduresResult.value();
-		
+
 		CallableStatement st = null;
 		ResultSet rs = null;
 		try {
@@ -126,21 +125,26 @@ public class GenericWork implements Work {
 					} else {
 						result = SQLTypeMapping.getSqlResult(st, field.type(), field.sqlType(), field.position());
 					}
-					if(result != null){
+					if (result != null) {
 						PropertyUtils.setProperty(resultObject, property, result);
 					}
 				}
 			}
 		} catch (Exception e) {
-			
-			logger.error("DBCallCDI - Error calling {}",procedureCall, e);
+
+			logger.error("DBCallCDI - Error calling {}", procedureCall, e);
 			workException = e;
-			
+
 		} finally {
-			if (rs!=null) rs.close();
-			if (st!=null) st.close();
+			if (rs != null) {
+				rs.close();
+			}
+
+			if (st != null) {
+				st.close();
+			}
 		}
-		
+
 	}
 
 	public Object getResultObject() {
