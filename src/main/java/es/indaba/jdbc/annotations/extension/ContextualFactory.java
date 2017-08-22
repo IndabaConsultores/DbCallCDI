@@ -45,5 +45,10 @@ public class ContextualFactory<T> implements ContextualLifecycle<T> {
 
 	@Override
 	public void destroy(final Bean<T> bean, final T instance, final CreationalContext<T> creationalContext) {
+		/*
+		 *  No especific behaviour on destroy.
+		 *  It is required to implement all methods
+		 */
+		
 	}
 }
