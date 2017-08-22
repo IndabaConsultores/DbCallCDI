@@ -14,7 +14,6 @@ import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -147,7 +146,7 @@ public final class SQLTypeMapping {
         if (sqlType == null || sqlType.equals(Object.class)) {
             setSqlParameter(cs, javaType, position, value);
         } else {
-            Date convertedValue = null;
+            java.util.Date convertedValue = null;
             if (value instanceof java.util.Date) {
                 if (sqlType.equals(java.sql.Date.class)) {
                     convertedValue = new java.sql.Date(((java.util.Date) value).getTime());
