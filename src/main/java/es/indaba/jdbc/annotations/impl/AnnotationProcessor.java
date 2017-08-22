@@ -30,12 +30,12 @@ import es.indaba.jdbc.annotations.api.StoredProcedureResult;
 
 public abstract class AnnotationProcessor {
 
-	private static final Logger logger = LoggerFactory.getLogger(AnnotationProcessor.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AnnotationProcessor.class);
 
 	@SuppressWarnings("rawtypes")
 	public static GenericWork buildWork(Method method, Object[] parameters) {
 
-		logger.debug("DBCallCDI - Building GenericWork for method: {}  in class {}", method.getName(),
+		LOGGER.debug("DBCallCDI - Building GenericWork for method: {}  in class {}", method.getName(),
 				method.getDeclaringClass().getName());
 
 		BeanManager beanManager = BeanManagerProvider.getInstance().getBeanManager();
@@ -44,10 +44,10 @@ public abstract class AnnotationProcessor {
 		StoredProcedureResult sProcResult = AnnotationUtils.findAnnotation(beanManager, annotations,
 				StoredProcedureResult.class);
 		if (sProc == null) {
-			logger.warn("DBCallCDI - StoredProcedure is not present in {}", method.getDeclaringClass().getName());
+			LOGGER.warn("DBCallCDI - StoredProcedure is not present in {}", method.getDeclaringClass().getName());
 			return null;
 		}
-		logger.debug("DBCallCDI - Preparing call for procedure {} ", sProc.value());
+		LOGGER.debug("DBCallCDI - Preparing call for procedure {} ", sProc.value());
 
 		LinkedList<SQLParameter> params = new LinkedList<>();
 
@@ -64,7 +64,7 @@ public abstract class AnnotationProcessor {
 			sqlParam.setValue(parameters[idx]);
 			params.add(sqlParam);
 
-			logger.debug("DBCallCDI {} - #{}  type: {} - sql-type:{} value:{}", sProc.value(), sqlParam.getPosition(),
+			LOGGER.debug("DBCallCDI {} - #{}  type: {} - sql-type:{} value:{}", sProc.value(), sqlParam.getPosition(),
 					sqlParam.getType(), !sqlParam.getSqlType().equals(Object.class)?sqlParam.getSqlType():"<null>", sqlParam.getValue());
 
 			idx++;
@@ -72,7 +72,7 @@ public abstract class AnnotationProcessor {
 
 		Class returnClass = method.getReturnType();
 		
-        logger.debug("DBCallCDI {} - Return Type {}",sProc.value(),returnClass);
+        LOGGER.debug("DBCallCDI {} - Return Type {}",sProc.value(),returnClass);
         
 		GenericWork work = new GenericWork();
 		work.setProcedure(sProc);

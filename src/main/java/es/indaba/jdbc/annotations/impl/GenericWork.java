@@ -30,7 +30,7 @@ import es.indaba.jdbc.annotations.api.StoredProcedureResult;
 @SuppressWarnings("rawtypes")
 public class GenericWork implements Work {
 
-	private static final Logger logger = LoggerFactory.getLogger(GenericWork.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(GenericWork.class);
 
 	StoredProcedure procedure;
 	StoredProcedureResult proceduresResult;
@@ -131,7 +131,7 @@ public class GenericWork implements Work {
 				}
 			}
 		} catch (SQLException | ReflectiveOperationException e) {
-			logger.error("DBCallCDI - Error calling {}", procedureCall, e);
+			LOGGER.error("DBCallCDI - Error calling {}", procedureCall, e);
 			workException = e;
 
 		} finally {
