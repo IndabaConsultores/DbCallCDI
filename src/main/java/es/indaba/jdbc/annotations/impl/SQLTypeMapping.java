@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public abstract class SQLTypeMapping {
 	
-	private static final Logger logger = Logger.getLogger(SQLTypeMapping.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(SQLTypeMapping.class.getName());
 	
 	/* The mapping from Java to SQL */
 	private static final Map<Class, Integer> java2SQL = new HashMap<>();
@@ -132,8 +132,8 @@ public abstract class SQLTypeMapping {
 			java2Getter.put(Byte.class, getter);
 			java2Getter.put(byte.class, getter);
 
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, e.getMessage(), e);
+		} catch (ReflectiveOperationException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 

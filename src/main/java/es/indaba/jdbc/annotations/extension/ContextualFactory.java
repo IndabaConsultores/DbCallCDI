@@ -38,7 +38,7 @@ public class ContextualFactory<T> implements ContextualLifecycle<T> {
 		try {
 			object = derivedClass.newInstance();
 		} catch (InstantiationException | IllegalAccessException e) {
-			LOGGER.warn("Error instantiatin class {}",derivedClass,e);
+			LOGGER.error("Error instantiating class {}",derivedClass,e);
 		}
 		return (T) object;
 	}

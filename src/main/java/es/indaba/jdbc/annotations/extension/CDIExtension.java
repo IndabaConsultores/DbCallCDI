@@ -35,36 +35,31 @@ import es.indaba.jdbc.annotations.impl.AnnotationInterfaceObjectFactory;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class CDIExtension implements javax.enterprise.inject.spi.Extension {
 
-	private static final Logger logger = LoggerFactory.getLogger(CDIExtension.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(CDIExtension.class);
 
 	private final Set<Bean> beans = new HashSet<>();
 
 	public <T> void processAnnotatedType(@WithAnnotations(DatabaseCall.class) @Observes ProcessAnnotatedType<T> pat, BeanManager bm) {
 		Class type = pat.getAnnotatedType().getJavaClass();
 		if (type.isInterface()) {
-			logger.info("DBCallCDI Module - Type detected!! {}", pat.getAnnotatedType().getBaseType());
+			LOGGER.info("DBCallCDI Module - Type detected!! {}", pat.getAnnotatedType().getBaseType());
 
 			AnnotationInterfaceObjectFactory factory = new AnnotationInterfaceObjectFactory();
-			try {
 
-				Class clazz = factory.buildClass(type);
-				final BeanBuilder<Object> beanBuilder = new BeanBuilder<Object>(
-						bm).passivationCapable(false).beanClass(clazz)
-						.name(type.getName())
-						.types(pat.getAnnotatedType().getBaseType())
-						.beanLifecycle(new ContextualFactory<Object>(clazz));
-				beans.add(beanBuilder.create());
-
-			} catch (Exception e) {
-				logger.error("Error processing DBCallCDI Annotations", e);
-			}
+			Class clazz = factory.buildClass(type);
+			final BeanBuilder<Object> beanBuilder = new BeanBuilder<Object>(
+					bm).passivationCapable(false).beanClass(clazz)
+					.name(type.getName())
+					.types(pat.getAnnotatedType().getBaseType())
+					.beanLifecycle(new ContextualFactory<Object>(clazz));
+			beans.add(beanBuilder.create());
 		}
 	}
 
 	public void afterBeanDiscovery(@Observes AfterBeanDiscovery abd) {
-		logger.info("DBCallCDI Module - Activated");
+		LOGGER.info("DBCallCDI Module - Activated");
 		for (Bean bean : this.beans) {
-			logger.info("DBCallCDI Module - DBCall discovered: {}", bean.getName());
+			LOGGER.info("DBCallCDI Module - DBCall discovered: {}", bean.getName());
 			abd.addBean(bean);
 		}
 		this.beans.clear();

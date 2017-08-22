@@ -130,8 +130,7 @@ public class GenericWork implements Work {
 					}
 				}
 			}
-		} catch (Exception e) {
-
+		} catch (SQLException | ReflectiveOperationException e) {
 			logger.error("DBCallCDI - Error calling {}", procedureCall, e);
 			workException = e;
 
