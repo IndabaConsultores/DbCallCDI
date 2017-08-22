@@ -33,7 +33,6 @@ public class InterceptorTest extends AbstractTest {
         testService.callNotExistingAsFunction();
     }
 
-    
     @Test
     public void testEmpty() throws Exception {
         TestBean testService = BeanProvider.getContextualReference(TestBean.class, false);

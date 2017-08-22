@@ -23,17 +23,16 @@ import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.junit.Test;
 
 import es.indaba.jdbc.test.extension.DBTester;
-import es.indaba.jdbc.test.interceptor.TestBean;
 import es.indaba.jdbc.test.result.ProcedureResult;
 
 public class StoredProceduresTest extends AbstractTest {
 
     @Test(expected = SQLException.class)
     public void testWorkException() throws Exception {
-        TestBean testService = BeanProvider.getContextualReference(TestBean.class, false);
-        testService.callNotExistingAsFunction();
+        DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
+        dbTester.callNotExistingAsFunction();
     }
-    
+
     @Test
     public void testEmpty() throws Exception {
         DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);

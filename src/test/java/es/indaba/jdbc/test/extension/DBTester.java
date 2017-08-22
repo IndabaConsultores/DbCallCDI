@@ -23,7 +23,12 @@ import es.indaba.jdbc.test.result.ProcedureResult;
 
 @ApplicationScoped
 public interface DBTester {
-
+    
+    @StoredProcedure("CALL notExistingOperation()")
+    @StoredProcedureResult({@FieldResult(name = "value", position = FieldResult.RESULTSET)})
+    @DatabaseCall
+    public ProcedureResult<String> callNotExistingAsFunction() throws Exception;
+    
     @StoredProcedure("CALL echoEmpty()")
     @StoredProcedureResult({@FieldResult(name = "value", position = FieldResult.RESULTSET)})
     @DatabaseCall
