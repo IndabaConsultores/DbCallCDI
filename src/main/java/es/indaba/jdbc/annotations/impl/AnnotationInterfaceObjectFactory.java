@@ -37,15 +37,13 @@ public class AnnotationInterfaceObjectFactory<T> {
 		factory.setInterfaces(new Class[] { type });
 		factory.setHandler(new MethodHandler() {
 
-			public Object invoke(Object arg0, Method method, Method arg2, Object[] parameters) throws Throwable {
-				
+			public Object invoke(Object arg0, Method method, Method arg2, Object[] parameters) throws Exception {
 				BeanManager beanManager = BeanManagerProvider.getInstance().getBeanManager();
 				Annotation[] annotations = method.getAnnotations();
 				DatabaseCall dbCall = AnnotationUtils.findAnnotation(beanManager,annotations, DatabaseCall.class);
 				if (dbCall == null) {
 					return null;
 				}
-				
 				GenericWork callWork = AnnotationProcessor.buildWork(method, parameters);
 				if (callWork == null) {
 					return null;
@@ -53,13 +51,10 @@ public class AnnotationInterfaceObjectFactory<T> {
 				// Get EM based on provided qualifier
 				EntityManager manager = BeanProvider.getContextualReference(EntityManager.class,false,AnnotationInstanceProvider.of(dbCall.qualifier()));
 				Session delegate = (Session) manager.getDelegate();
-
 				delegate.doWork(callWork);
-
 				if (callWork.getWorkException()!=null) {
 					throw callWork.getWorkException();
 				}
-				
 				return callWork.getResultObject();
 			}
 		});
