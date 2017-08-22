@@ -28,25 +28,27 @@ import javassist.util.proxy.ProxyFactory;
 @SuppressWarnings("rawtypes")
 public class AnnotationInterfaceObjectFactory<T> {
 
-    public Class buildClass(Class<T> type) {
+    public Class buildClass(final Class<T> type) {
 
-        ProxyFactory factory = new ProxyFactory();
+        final ProxyFactory factory = new ProxyFactory();
         factory.setInterfaces(new Class[] {type});
         factory.setHandler(new MethodHandler() {
-            public Object invoke(Object arg0, Method method, Method arg2, Object[] parameters) throws Throwable {
-                BeanManager beanManager = BeanManagerProvider.getInstance().getBeanManager();
-                Annotation[] annotations = method.getAnnotations();
-                DatabaseCall dbCall = AnnotationUtils.findAnnotation(beanManager, annotations, DatabaseCall.class);
+            public Object invoke(final Object arg0, final Method method, final Method arg2, final Object[] parameters)
+                    throws Throwable {
+                final BeanManager beanManager = BeanManagerProvider.getInstance().getBeanManager();
+                final Annotation[] annotations = method.getAnnotations();
+                final DatabaseCall dbCall =
+                        AnnotationUtils.findAnnotation(beanManager, annotations, DatabaseCall.class);
                 if (dbCall == null) {
                     return null;
                 }
-                GenericWork callWork = AnnotationProcessor.buildWork(method, parameters);
+                final GenericWork callWork = AnnotationProcessor.buildWork(method, parameters);
                 if (callWork == null) {
                     return null;
                 }
-                EntityManager manager = BeanProvider.getContextualReference(EntityManager.class, false,
+                final EntityManager manager = BeanProvider.getContextualReference(EntityManager.class, false,
                         AnnotationInstanceProvider.of(dbCall.qualifier()));
-                Session delegate = (Session) manager.getDelegate();
+                final Session delegate = (Session) manager.getDelegate();
                 delegate.doWork(callWork);
                 if (callWork.getWorkException() != null) {
                     throw callWork.getWorkException();
@@ -58,8 +60,8 @@ public class AnnotationInterfaceObjectFactory<T> {
     }
 
     @SuppressWarnings("unchecked")
-    public T getInstance(Class<T> c) throws InstantiationException, IllegalAccessException {
-        Class derived = buildClass(c);
+    public T getInstance(final Class<T> c) throws InstantiationException, IllegalAccessException {
+        final Class derived = buildClass(c);
         return (T) derived.newInstance();
     }
 }

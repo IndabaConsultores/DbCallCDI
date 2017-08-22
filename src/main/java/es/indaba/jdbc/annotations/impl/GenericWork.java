@@ -40,7 +40,7 @@ public class GenericWork implements Work {
         return procedure;
     }
 
-    public void setProcedure(StoredProcedure procedure) {
+    public void setProcedure(final StoredProcedure procedure) {
         this.procedure = procedure;
     }
 
@@ -48,7 +48,7 @@ public class GenericWork implements Work {
         return proceduresResult;
     }
 
-    public void setProceduresResult(StoredProcedureResult proceduresResult) {
+    public void setProceduresResult(final StoredProcedureResult proceduresResult) {
         this.proceduresResult = proceduresResult;
     }
 
@@ -56,7 +56,7 @@ public class GenericWork implements Work {
         return parameters;
     }
 
-    public void setParameters(List<SQLParameter> parameters) {
+    public void setParameters(final List<SQLParameter> parameters) {
         this.parameters = parameters;
     }
 
@@ -64,7 +64,7 @@ public class GenericWork implements Work {
         return returnType;
     }
 
-    public void setReturnType(Class returnType) {
+    public void setReturnType(final Class returnType) {
         this.returnType = returnType;
     }
 
@@ -74,20 +74,20 @@ public class GenericWork implements Work {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void execute(Connection con) throws SQLException {
-        String procedureCall = procedure.value();
-        FieldResult[] fields = proceduresResult == null ? new FieldResult[0] : proceduresResult.value();
+    public void execute(final Connection con) throws SQLException {
+        final String procedureCall = procedure.value();
+        final FieldResult[] fields = proceduresResult == null ? new FieldResult[0] : proceduresResult.value();
 
         CallableStatement st = null;
         ResultSet rs = null;
         try {
             st = con.prepareCall(procedureCall);
-            for (SQLParameter p : parameters) {
-                int pos = p.getPosition();
-                Object val = p.getValue();
-                Class type = p.getType();
-                Class sqlType = p.getSqlType();
-                Integer jdbcType = SQLTypeMapping.getSqlTypeforClass(type);
+            for (final SQLParameter p : parameters) {
+                final int pos = p.getPosition();
+                final Object val = p.getValue();
+                final Class type = p.getType();
+                final Class sqlType = p.getSqlType();
+                final Integer jdbcType = SQLTypeMapping.getSqlTypeforClass(type);
                 if (jdbcType != null) {
                     if (val != null) {
                         SQLTypeMapping.setSqlParameter(st, type, sqlType, pos, val);
@@ -96,13 +96,13 @@ public class GenericWork implements Work {
                     }
                 }
             }
-            for (FieldResult field : fields) {
-                int position = field.position();
+            for (final FieldResult field : fields) {
+                final int position = field.position();
                 Class type = field.sqlType();
                 if (type == null || type.equals(Object.class)) {
                     type = field.type();
                 }
-                Integer jdbcType = SQLTypeMapping.getSqlTypeforClass(type);
+                final Integer jdbcType = SQLTypeMapping.getSqlTypeforClass(type);
                 if (position != FieldResult.RESULTSET) {
                     st.registerOutParameter(position, jdbcType);
                 }
@@ -113,8 +113,8 @@ public class GenericWork implements Work {
                 // Return instance
                 resultObject = returnType.newInstance();
                 rs = st.getResultSet();
-                for (FieldResult field : fields) {
-                    String property = field.name();
+                for (final FieldResult field : fields) {
+                    final String property = field.name();
                     Object result = null;
                     if (field.position() == FieldResult.RESULTSET) {
                         rs.next();
@@ -147,7 +147,7 @@ public class GenericWork implements Work {
         return resultObject;
     }
 
-    public void setResultObject(Object resultObject) {
+    public void setResultObject(final Object resultObject) {
         this.resultObject = resultObject;
     }
 }

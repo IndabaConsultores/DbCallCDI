@@ -24,7 +24,7 @@ public class ContextualFactory<T> implements ContextualLifecycle<T> {
     private final Class derivedClass;
 
     @SuppressWarnings("rawtypes")
-    public ContextualFactory(Class t) {
+    public ContextualFactory(final Class t) {
         this.derivedClass = t;
     }
 

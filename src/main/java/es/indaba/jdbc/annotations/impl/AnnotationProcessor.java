@@ -32,15 +32,15 @@ public final class AnnotationProcessor {
     private AnnotationProcessor() {}
 
     @SuppressWarnings("rawtypes")
-    public static GenericWork buildWork(Method method, Object[] parameters) {
+    public static GenericWork buildWork(final Method method, final Object[] parameters) {
 
         LOGGER.debug("DBCallCDI - Building GenericWork for method: {}  in class {}", method.getName(),
                 method.getDeclaringClass().getName());
 
-        BeanManager beanManager = BeanManagerProvider.getInstance().getBeanManager();
-        Annotation[] annotations = method.getAnnotations();
-        StoredProcedure sProc = AnnotationUtils.findAnnotation(beanManager, annotations, StoredProcedure.class);
-        StoredProcedureResult sProcResult =
+        final BeanManager beanManager = BeanManagerProvider.getInstance().getBeanManager();
+        final Annotation[] annotations = method.getAnnotations();
+        final StoredProcedure sProc = AnnotationUtils.findAnnotation(beanManager, annotations, StoredProcedure.class);
+        final StoredProcedureResult sProcResult =
                 AnnotationUtils.findAnnotation(beanManager, annotations, StoredProcedureResult.class);
         if (sProc == null) {
             LOGGER.warn("DBCallCDI - StoredProcedure is not present in {}", method.getDeclaringClass().getName());
@@ -48,15 +48,15 @@ public final class AnnotationProcessor {
         }
         LOGGER.debug("DBCallCDI - Preparing call for procedure {} ", sProc.value());
 
-        LinkedList<SQLParameter> params = new LinkedList<>();
+        final LinkedList<SQLParameter> params = new LinkedList<>();
 
         int idx = 0;
-        for (Parameter param : method.getParameters()) {
-            StoredProcedureParameter p =
+        for (final Parameter param : method.getParameters()) {
+            final StoredProcedureParameter p =
                     AnnotationUtils.findAnnotation(beanManager, param.getAnnotations(), StoredProcedureParameter.class);
-            Class type = param.getType();
+            final Class type = param.getType();
 
-            SQLParameter sqlParam = new SQLParameter();
+            final SQLParameter sqlParam = new SQLParameter();
             sqlParam.setType(type);
             sqlParam.setSqlType(p.sqlType());
             sqlParam.setPosition(p.value());
@@ -70,11 +70,11 @@ public final class AnnotationProcessor {
             idx++;
         }
 
-        Class returnClass = method.getReturnType();
+        final Class returnClass = method.getReturnType();
 
         LOGGER.debug("DBCallCDI {} - Return Type {}", sProc.value(), returnClass);
 
-        GenericWork work = new GenericWork();
+        final GenericWork work = new GenericWork();
         work.setProcedure(sProc);
         work.setProceduresResult(sProcResult);
         work.setParameters(params);

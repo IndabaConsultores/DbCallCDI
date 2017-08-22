@@ -36,15 +36,15 @@ public class CDIExtension implements javax.enterprise.inject.spi.Extension {
 
     private final Set<Bean> beans = new HashSet<>();
 
-    public <T> void processAnnotatedType(@WithAnnotations(DatabaseCall.class) @Observes ProcessAnnotatedType<T> pat,
-            BeanManager bm) {
-        Class type = pat.getAnnotatedType().getJavaClass();
+    public <T> void processAnnotatedType(@WithAnnotations(DatabaseCall.class) @Observes final ProcessAnnotatedType<T> pat,
+            final BeanManager bm) {
+        final Class type = pat.getAnnotatedType().getJavaClass();
         if (type.isInterface()) {
             LOGGER.info("DBCallCDI Module - Type detected!! {}", pat.getAnnotatedType().getBaseType());
 
-            AnnotationInterfaceObjectFactory factory = new AnnotationInterfaceObjectFactory();
+            final AnnotationInterfaceObjectFactory factory = new AnnotationInterfaceObjectFactory();
 
-            Class clazz = factory.buildClass(type);
+            final Class clazz = factory.buildClass(type);
             final BeanBuilder<Object> beanBuilder = new BeanBuilder<Object>(bm).passivationCapable(false)
                     .beanClass(clazz).name(type.getName()).types(pat.getAnnotatedType().getBaseType())
                     .beanLifecycle(new ContextualFactory<Object>(clazz));
@@ -52,9 +52,9 @@ public class CDIExtension implements javax.enterprise.inject.spi.Extension {
         }
     }
 
-    public void afterBeanDiscovery(@Observes AfterBeanDiscovery abd) {
+    public void afterBeanDiscovery(@Observes final AfterBeanDiscovery abd) {
         LOGGER.info("DBCallCDI Module - Activated");
-        for (Bean bean : this.beans) {
+        for (final Bean bean : this.beans) {
             LOGGER.info("DBCallCDI Module - DBCall discovered: {}", bean.getName());
             abd.addBean(bean);
         }

@@ -21,7 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
-public class SQLTypeMapping {
+public final class SQLTypeMapping {
 
     private static final Logger LOGGER = Logger.getLogger(SQLTypeMapping.class.getName());
 
@@ -69,7 +69,7 @@ public class SQLTypeMapping {
 
         try {
 
-            Class c = CallableStatement.class;
+            final Class c = CallableStatement.class;
             Method setter = c.getMethod("setString", int.class, String.class);
             java2Setter.put(String.class, setter);
             java2Setter.put(Character.class, setter);
@@ -128,7 +128,7 @@ public class SQLTypeMapping {
             java2Getter.put(Byte.class, getter);
             java2Getter.put(byte.class, getter);
 
-        } catch (ReflectiveOperationException e) {
+        } catch (final ReflectiveOperationException e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
     }
@@ -137,12 +137,12 @@ public class SQLTypeMapping {
 
     }
 
-    public static Integer getSqlTypeforClass(Class c) {
+    public static Integer getSqlTypeforClass(final Class c) {
         return java2SQL.get(c);
     }
 
-    public static <T> void setSqlParameter(CallableStatement cs, Class<T> javaType,
-            Class<? extends java.util.Date> sqlType, int position, T value)
+    public static <T> void setSqlParameter(final CallableStatement cs, final Class<T> javaType,
+            final Class<? extends java.util.Date> sqlType, final int position, final T value)
             throws SQLException, ReflectiveOperationException {
         if (sqlType == null || sqlType.equals(Object.class)) {
             setSqlParameter(cs, javaType, position, value);
@@ -161,18 +161,19 @@ public class SQLTypeMapping {
         }
     }
 
-    public static <T> void setSqlParameter(CallableStatement cs, Class<T> javaType, int position, T value)
-            throws ReflectiveOperationException {
+    public static <T> void setSqlParameter(final CallableStatement cs, final Class<T> javaType, final int position,
+            final T value) throws ReflectiveOperationException {
         Object convertedValue = null;
         if (value instanceof java.util.Date) {
             convertedValue = new java.sql.Date(((java.util.Date) value).getTime());
         }
-        Method setter = java2Setter.get(javaType);
+        final Method setter = java2Setter.get(javaType);
         setter.invoke(cs, position, convertedValue == null ? value : convertedValue);
     }
 
-    public static <T> T getSqlResult(CallableStatement cs, Class<T> javaType, Class<? extends java.util.Date> sqlType,
-            int position) throws SQLException, ReflectiveOperationException {
+    public static <T> T getSqlResult(final CallableStatement cs, final Class<T> javaType,
+            final Class<? extends java.util.Date> sqlType, final int position)
+            throws SQLException, ReflectiveOperationException {
         if (sqlType == null || sqlType.equals(Object.class)) {
             return getSqlResult(cs, javaType, position);
         } else {
@@ -180,9 +181,9 @@ public class SQLTypeMapping {
         }
     }
 
-    public static <T> T getSqlResult(CallableStatement cs, Class<T> javaType, int position)
+    public static <T> T getSqlResult(final CallableStatement cs, final Class<T> javaType, final int position)
             throws SQLException, ReflectiveOperationException {
-        Method getter = java2Getter.get(javaType);
+        final Method getter = java2Getter.get(javaType);
         Object result = getter.invoke(cs, position);
         result = cs.wasNull() ? null : result;
         if (result instanceof java.sql.Date) {
@@ -191,8 +192,9 @@ public class SQLTypeMapping {
         return (T) result;
     }
 
-    public static <T> T getSqlResultsetResult(ResultSet rs, Class<T> javaType, Class<? extends java.util.Date> sqlType,
-            int position) throws SQLException, ReflectiveOperationException {
+    public static <T> T getSqlResultsetResult(final ResultSet rs, final Class<T> javaType,
+            final Class<? extends java.util.Date> sqlType, final int position)
+            throws SQLException, ReflectiveOperationException {
         if (sqlType == null || sqlType.equals(Object.class)) {
             return getSqlResultsetResult(rs, javaType, position);
         } else {
@@ -200,11 +202,11 @@ public class SQLTypeMapping {
         }
     }
 
-    public static <T> T getSqlResultsetResult(ResultSet rs, Class<T> javaType, int position)
+    public static <T> T getSqlResultsetResult(final ResultSet rs, final Class<T> javaType, final int position)
             throws SQLException, ReflectiveOperationException {
         Method getter = java2Getter.get(javaType);
-        String methodName = getter.getName();
-        Class rsClass = ResultSet.class;
+        final String methodName = getter.getName();
+        final Class rsClass = ResultSet.class;
         getter = rsClass.getMethod(methodName, int.class);
         Object result = getter.invoke(rs, position);
         result = rs.wasNull() ? null : result;

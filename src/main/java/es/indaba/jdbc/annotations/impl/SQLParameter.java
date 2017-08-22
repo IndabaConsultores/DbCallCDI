@@ -21,7 +21,7 @@ public final class SQLParameter {
         return type;
     }
 
-    public void setType(Class type) {
+    public void setType(final Class type) {
         this.type = type;
     }
 
@@ -29,7 +29,7 @@ public final class SQLParameter {
         return sqlType;
     }
 
-    public void setSqlType(Class sqlType) {
+    public void setSqlType(final Class sqlType) {
         this.sqlType = sqlType;
     }
 
@@ -37,7 +37,7 @@ public final class SQLParameter {
         return value;
     }
 
-    public void setValue(Object value) {
+    public void setValue(final Object value) {
         this.value = value;
     }
 
@@ -45,7 +45,7 @@ public final class SQLParameter {
         return position;
     }
 
-    public void setPosition(int position) {
+    public void setPosition(final int position) {
         this.position = position;
     }
 

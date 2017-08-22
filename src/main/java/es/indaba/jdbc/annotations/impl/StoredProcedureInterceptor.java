@@ -30,22 +30,22 @@ import es.indaba.jdbc.annotations.api.DatabaseCall;
 public class StoredProcedureInterceptor {
 
     @AroundInvoke
-    public Object callProcedure(InvocationContext invocationContext) throws Exception {
+    public Object callProcedure(final InvocationContext invocationContext) throws Exception {
 
-        BeanManager beanManager = BeanManagerProvider.getInstance().getBeanManager();
-        Annotation[] annotations = invocationContext.getMethod().getAnnotations();
-        DatabaseCall dbCall = AnnotationUtils.findAnnotation(beanManager, annotations, DatabaseCall.class);
+        final BeanManager beanManager = BeanManagerProvider.getInstance().getBeanManager();
+        final Annotation[] annotations = invocationContext.getMethod().getAnnotations();
+        final DatabaseCall dbCall = AnnotationUtils.findAnnotation(beanManager, annotations, DatabaseCall.class);
         if (dbCall == null) {
             return null;
         }
 
-        GenericWork callWork =
+        final GenericWork callWork =
                 AnnotationProcessor.buildWork(invocationContext.getMethod(), invocationContext.getParameters());
 
         // Get EM based on provided qualifier
-        EntityManager manager = BeanProvider.getContextualReference(EntityManager.class, false,
+        final EntityManager manager = BeanProvider.getContextualReference(EntityManager.class, false,
                 AnnotationInstanceProvider.of(dbCall.qualifier()));
-        Session delegate = (Session) manager.getDelegate();
+        final Session delegate = (Session) manager.getDelegate();
 
         delegate.doWork(callWork);
 
