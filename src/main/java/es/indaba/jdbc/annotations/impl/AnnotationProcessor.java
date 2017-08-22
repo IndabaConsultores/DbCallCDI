@@ -33,7 +33,7 @@ public class AnnotationProcessor {
 	private static final Logger logger = LoggerFactory.getLogger(AnnotationProcessor.class);
 
 	@SuppressWarnings("rawtypes")
-	public static GenericWork buildWork(Method method, Object[] parameters) throws Exception {
+	public static GenericWork buildWork(Method method, Object[] parameters) {
 
 		logger.debug("DBCallCDI - Building GenericWork for method: {}  in class {}", method.getName(),
 				method.getDeclaringClass().getName());
