@@ -43,9 +43,7 @@ public class AnnotationInterfaceObjectFactory<T> {
                     return null;
                 }
                 final GenericWork callWork = AnnotationProcessor.buildWork(method, parameters);
-                if (callWork == null) {
-                    return null;
-                }
+               
                 final EntityManager manager = BeanProvider.getContextualReference(EntityManager.class, false,
                         AnnotationInstanceProvider.of(dbCall.qualifier()));
                 final Session delegate = (Session) manager.getDelegate();
