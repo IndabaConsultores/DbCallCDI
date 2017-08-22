@@ -59,9 +59,4 @@ public class AnnotationInterfaceObjectFactory<T> {
         return factory.createClass();
     }
 
-    @SuppressWarnings("unchecked")
-    public T getInstance(final Class<T> c) throws InstantiationException, IllegalAccessException {
-        final Class derived = buildClass(c);
-        return (T) derived.newInstance();
-    }
 }
