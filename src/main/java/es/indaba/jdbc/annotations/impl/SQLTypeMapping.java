@@ -135,7 +135,7 @@ public abstract class SQLTypeMapping {
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, e.getMessage(), e);
 		}
-	};
+	}
 
 	private SQLTypeMapping() {
 		
