@@ -25,16 +25,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class SQLTypeMapping {
+public abstract class SQLTypeMapping {
 	
 	private static final Logger logger = Logger.getLogger(SQLTypeMapping.class.getName());
 	
-	/** The mapping from Java to SQL */
-	public static Map<Class, Integer> java2SQL = new HashMap<Class, Integer>();
-	/** The mapping from type codes (as defined in java.sql.Types) to SQL */
-	public static Map<Integer, Class> sql2Java = new HashMap<Integer, Class>();
-	public static Map<Class, Method> java2Setter = new HashMap<Class, Method>();
-	public static Map<Class, Method> java2Getter = new HashMap<Class, Method>();
+	/* The mapping from Java to SQL */
+	private static final Map<Class, Integer> java2SQL = new HashMap<>();
+	/* The mapping from type codes (as defined in java.sql.Types) to SQL */
+	private static final Map<Integer, Class> sql2Java = new HashMap<>();
+	private static final Map<Class, Method> java2Setter = new HashMap<>();
+	private static final Map<Class, Method> java2Getter = new HashMap<>();
 	  
 	static {
 		java2SQL.put(Boolean.class, Types.BOOLEAN);
@@ -137,6 +137,10 @@ public class SQLTypeMapping {
 		}
 	};
 
+	private SQLTypeMapping() {
+		
+	}
+	
 	public static Integer getSqlTypeforClass(Class c) {
 		return java2SQL.get(c);
 	}
