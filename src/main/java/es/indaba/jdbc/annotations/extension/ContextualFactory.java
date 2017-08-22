@@ -16,9 +16,13 @@ import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.Bean;
 
 import org.apache.deltaspike.core.util.metadata.builder.ContextualLifecycle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ContextualFactory<T> implements ContextualLifecycle<T> {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(ContextualFactory.class);
+	
 	@SuppressWarnings("rawtypes")
 	private Class derivedClass;
 
@@ -34,7 +38,7 @@ public class ContextualFactory<T> implements ContextualLifecycle<T> {
 		try {
 			object = derivedClass.newInstance();
 		} catch (InstantiationException | IllegalAccessException e) {
-			e.printStackTrace();
+			LOGGER.warn("Error instantiatin class {}",derivedClass,e);
 		}
 		return (T) object;
 	}
