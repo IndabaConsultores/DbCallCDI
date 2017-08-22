@@ -61,7 +61,7 @@ public class CDIExtension implements javax.enterprise.inject.spi.Extension {
 		}
 	}
 
-	public void afterBeanDiscovery(@Observes AfterBeanDiscovery abd, BeanManager bm) {
+	public void afterBeanDiscovery(@Observes AfterBeanDiscovery abd) {
 		logger.info("DBCallCDI Module - Activated");
 		for (Bean bean : this.beans) {
 			logger.info("DBCallCDI Module - DBCall discovered: {}", bean.getName());
