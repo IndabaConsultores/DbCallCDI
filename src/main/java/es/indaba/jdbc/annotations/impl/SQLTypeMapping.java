@@ -165,7 +165,7 @@ public class SQLTypeMapping {
             throws ReflectiveOperationException {
         Object convertedValue = null;
         if (value instanceof java.util.Date) {
-            convertedValue = (T) new java.sql.Date(((java.util.Date) value).getTime());
+            convertedValue = new java.sql.Date(((java.util.Date) value).getTime());
         }
         Method setter = java2Setter.get(javaType);
         setter.invoke(cs, position, convertedValue == null ? value : convertedValue);
