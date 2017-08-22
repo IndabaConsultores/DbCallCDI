@@ -36,6 +36,11 @@ public class TestBean {
         return null;
     }
     
+    @DatabaseCall
+    public ProcedureResult<String> callWrongDefinition() throws Exception {
+        return null;
+    }
+    
     @StoredProcedure("CALL echoEmpty()")
     @StoredProcedureResult({@FieldResult(name = "value", position = FieldResult.RESULTSET)})
     @DatabaseCall

@@ -43,8 +43,8 @@ public final class AnnotationProcessor {
         final StoredProcedureResult sProcResult =
                 AnnotationUtils.findAnnotation(beanManager, annotations, StoredProcedureResult.class);
         if (sProc == null) {
-            LOGGER.warn("DBCallCDI - StoredProcedure is not present in {}", method.getDeclaringClass().getName());
-            return null;
+            LOGGER.error("DBCallCDI - StoredProcedure is not present in {}", method.getDeclaringClass().getName());
+            throw new IllegalArgumentException("StoredProcedure annotation is not present in "+method.getDeclaringClass().getName());
         }
         LOGGER.debug("DBCallCDI - Preparing call for procedure {} ", sProc.value());
 

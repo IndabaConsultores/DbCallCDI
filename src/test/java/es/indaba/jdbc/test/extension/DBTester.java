@@ -29,6 +29,9 @@ public interface DBTester {
     @DatabaseCall
     public ProcedureResult<String> callNotExistingAsFunction() throws Exception;
     
+    @DatabaseCall
+    public ProcedureResult<String> callWrongDefinition() throws Exception;
+    
     @StoredProcedure("CALL echoEmpty()")
     @StoredProcedureResult({@FieldResult(name = "value", position = FieldResult.RESULTSET)})
     @DatabaseCall

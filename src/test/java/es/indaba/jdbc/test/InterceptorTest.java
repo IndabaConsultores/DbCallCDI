@@ -33,6 +33,12 @@ public class InterceptorTest extends AbstractTest {
         testService.callNotExistingAsFunction();
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testWrongDefinition() throws Exception {
+        TestBean testService = BeanProvider.getContextualReference(TestBean.class, false);
+        testService.callWrongDefinition();
+    }
+
     @Test
     public void testEmpty() throws Exception {
         TestBean testService = BeanProvider.getContextualReference(TestBean.class, false);
@@ -43,17 +49,17 @@ public class InterceptorTest extends AbstractTest {
         testService.callEchoEmptyAsProcedure();
         assertTrue(true);
     }
-    
+
     @Test
     public void testNull() throws Exception {
         TestBean testService = BeanProvider.getContextualReference(TestBean.class, false);
         ProcedureResult<String> result = testService.callEchoAsFunction(null);
         assertNotNull(result);
-        assertNull (result.getValue());
+        assertNull(result.getValue());
 
         result = testService.callEchoAsProcedure(null);
         assertNotNull(result);
-        assertNull (result.getValue());
+        assertNull(result.getValue());
     }
 
     @Test

@@ -41,7 +41,7 @@ public class StoredProcedureInterceptor {
 
         final GenericWork callWork =
                 AnnotationProcessor.buildWork(invocationContext.getMethod(), invocationContext.getParameters());
-
+     
         // Get EM based on provided qualifier
         final EntityManager manager = BeanProvider.getContextualReference(EntityManager.class, false,
                 AnnotationInstanceProvider.of(dbCall.qualifier()));
