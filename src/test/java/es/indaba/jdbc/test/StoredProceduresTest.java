@@ -23,6 +23,7 @@ import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.junit.Test;
 
 import es.indaba.jdbc.test.extension.DBTester;
+import es.indaba.jdbc.test.interceptor.TestBean;
 import es.indaba.jdbc.test.result.ProcedureResult;
 
 public class StoredProceduresTest extends AbstractTest {
@@ -33,6 +34,18 @@ public class StoredProceduresTest extends AbstractTest {
         dbTester.callNotExistingAsFunction();
     }
 
+    @Test
+    public void testNull() throws Exception {
+        DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
+        ProcedureResult<String> result = dbTester.callEchoAsFunction(null);
+        assertNotNull(result);
+        assertNull (result.getValue());
+
+        result = dbTester.callEchoAsProcedure(null);
+        assertNotNull(result);
+        assertNull (result.getValue());
+    }
+    
     @Test
     public void testEmpty() throws Exception {
         DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
