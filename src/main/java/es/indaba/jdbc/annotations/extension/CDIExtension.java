@@ -36,8 +36,8 @@ public class CDIExtension implements javax.enterprise.inject.spi.Extension {
 
     private final Set<Bean> beans = new HashSet<>();
 
-    public <T> void processAnnotatedType(@WithAnnotations(DatabaseCall.class) @Observes final ProcessAnnotatedType<T> pat,
-            final BeanManager bm) {
+    public <T> void processAnnotatedType(
+            @WithAnnotations(DatabaseCall.class) @Observes final ProcessAnnotatedType<T> pat, final BeanManager bm) {
         final Class type = pat.getAnnotatedType().getJavaClass();
         if (type.isInterface()) {
             LOGGER.info("DBCallCDI Module - Type detected!! {}", pat.getAnnotatedType().getBaseType());
