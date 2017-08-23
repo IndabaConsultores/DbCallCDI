@@ -14,7 +14,7 @@ Include Maven dependency on your pom.xml
 <dependency>
 	<groupId>es.indaba</groupId>
 	<artifactId>DbCallCDI</artifactId>
-	<version>1.7</version>
+	<version>1.8</version>
 </dependency>
 ```
 
