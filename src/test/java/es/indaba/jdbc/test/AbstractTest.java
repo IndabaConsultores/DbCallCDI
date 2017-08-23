@@ -1,14 +1,11 @@
 /*******************************************************************************
- *  This program is free software: you can redistribute it and/or modify it under
- *  the terms of the GNU Lesser General Public License as published by the Free
- *  Software Foundation, either version 3 of the License, or (at your option) any
- *  later version. This program is distributed in the hope that it will be
- *  useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
- *  Public License for more details. You should have received a copy of the GNU
- *  Lesser General Public License along with this program. If not, see
- *  <http://www.gnu.org/licenses/>
- *  
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General
+ * Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+ * later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details. You should have received a copy of the GNU Lesser General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/>
+ * 
  *******************************************************************************/
 package es.indaba.jdbc.test;
 
@@ -30,46 +27,47 @@ import org.junit.BeforeClass;
 import es.indaba.jdbc.test.cdi.SecondEM;
 
 public abstract class AbstractTest {
-	
-	private static final Logger logger = Logger.getLogger(AbstractTest.class.getName());
 
-	private static CdiContainer cdiContainer;
-	private static ContextControl contextControl;
+    private static final Logger logger = Logger.getLogger(AbstractTest.class.getName());
 
-	@BeforeClass
-	public static void setUp() {
-		cdiContainer = CdiContainerLoader.getCdiContainer();
-		cdiContainer.boot();
+    private static CdiContainer cdiContainer;
+    private static ContextControl contextControl;
 
-		contextControl = cdiContainer.getContextControl();
-		contextControl.startContext(ApplicationScoped.class);
-	}
+    @BeforeClass
+    public static void setUp() {
+        cdiContainer = CdiContainerLoader.getCdiContainer();
+        cdiContainer.boot();
 
-	@AfterClass
-	public static void tearDown() {
-		clearDatabases();
-		contextControl.stopContexts();
-		cdiContainer.shutdown();
-	}
+        contextControl = cdiContainer.getContextControl();
+        contextControl.startContext(ApplicationScoped.class);
+    }
 
-	
-	
-	private static void clearDatabases() {
-		EntityManager defaultEm = BeanProvider.getContextualReference(EntityManager.class, false);	
-		clearDatabase(defaultEm);
-		EntityManager secondEm = BeanProvider.getContextualReference(EntityManager.class, false, AnnotationInstanceProvider.of(SecondEM.class));
-		clearDatabase(secondEm);
-	}
+    @AfterClass
+    public static void tearDown() {
+        clearDatabases();
+        contextControl.stopContexts();
+        cdiContainer.shutdown();
+    }
 
-	private static void clearDatabase(EntityManager em) {
-		Query q = em.createNativeQuery("DROP SCHEMA PUBLIC CASCADE");
-		try {
-			em.getTransaction().begin();
-			q.executeUpdate();
-			em.getTransaction().commit();
-		} catch (Exception e) {
-			em.getTransaction().rollback();
-			logger.log(Level.SEVERE, e.getMessage(), e);
-		}
-	}
+
+
+    private static void clearDatabases() {
+        EntityManager defaultEm = BeanProvider.getContextualReference(EntityManager.class, false);
+        clearDatabase(defaultEm);
+        EntityManager secondEm = BeanProvider.getContextualReference(EntityManager.class, false,
+                AnnotationInstanceProvider.of(SecondEM.class));
+        clearDatabase(secondEm);
+    }
+
+    private static void clearDatabase(EntityManager em) {
+        Query q = em.createNativeQuery("DROP SCHEMA PUBLIC CASCADE");
+        try {
+            em.getTransaction().begin();
+            q.executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
+    }
 }

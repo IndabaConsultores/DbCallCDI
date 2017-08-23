@@ -23,59 +23,58 @@ import es.indaba.jdbc.test.extension.PostgreDBTester;
 import es.indaba.jdbc.test.result.ProcedureResult;
 
 @Ignore("Depends on ElephandSQL Service")
-public class PostgreSQLTest  {
-	
-	private static final Logger logger = Logger.getLogger(AbstractTest.class.getName());
+public class PostgreSQLTest {
 
-	private static CdiContainer cdiContainer;
-	private static ContextControl contextControl;
+    private static final Logger logger = Logger.getLogger(AbstractTest.class.getName());
 
-	@BeforeClass
-	public static void setUp() {
-		cdiContainer = CdiContainerLoader.getCdiContainer();
-		cdiContainer.boot();
+    private static CdiContainer cdiContainer;
+    private static ContextControl contextControl;
 
-		contextControl = cdiContainer.getContextControl();
-		contextControl.startContext(ApplicationScoped.class);
-	}
+    @BeforeClass
+    public static void setUp() {
+        cdiContainer = CdiContainerLoader.getCdiContainer();
+        cdiContainer.boot();
 
-	@AfterClass
-	public static void tearDown() {
-	//	clearDatabase();
-		contextControl.stopContexts();
-		cdiContainer.shutdown();
-	}
+        contextControl = cdiContainer.getContextControl();
+        contextControl.startContext(ApplicationScoped.class);
+    }
 
-	
-	@SuppressWarnings("unused")
-	private static void clearDatabase() {
-		EntityManager em = BeanProvider.getContextualReference(
-				EntityManager.class, false);
-		Query q = em.createNativeQuery("DROP SCHEMA PUBLIC CASCADE");
-		try {
-			em.getTransaction().begin();
-			q.executeUpdate();
-			em.getTransaction().commit();
-		} catch (Exception e) {
-			em.getTransaction().rollback();
-			logger.log(Level.SEVERE, e.getMessage(), e);
-		}
-	}
-	
-	
-	@Test
-	public void stringTest() throws Exception {
-		String testVal = "testVal";
-		PostgreDBTester dbTester = BeanProvider.getContextualReference(PostgreDBTester.class, false);
-		ProcedureResult<String> result = dbTester.callEchoAsFunction(testVal);
-		assertNotNull(result);
-		assertEquals(testVal, result.getValue());
+    @AfterClass
+    public static void tearDown() {
+        // clearDatabase();
+        contextControl.stopContexts();
+        cdiContainer.shutdown();
+    }
 
-	    result = dbTester.callEchoAsProcedure(testVal);
-		assertNotNull(result);
-		assertEquals(testVal, result.getValue());
-	
-	}
-	
-   	
+
+    @SuppressWarnings("unused")
+    private static void clearDatabase() {
+        EntityManager em = BeanProvider.getContextualReference(EntityManager.class, false);
+        Query q = em.createNativeQuery("DROP SCHEMA PUBLIC CASCADE");
+        try {
+            em.getTransaction().begin();
+            q.executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
+    }
+
+
+    @Test
+    public void testString() throws Exception {
+        String testVal = "testVal";
+        PostgreDBTester dbTester = BeanProvider.getContextualReference(PostgreDBTester.class, false);
+        ProcedureResult<String> result = dbTester.callEchoAsFunction(testVal);
+        assertNotNull(result);
+        assertEquals(testVal, result.getValue());
+
+        result = dbTester.callEchoAsProcedure(testVal);
+        assertNotNull(result);
+        assertEquals(testVal, result.getValue());
+
+    }
+
+
 }
