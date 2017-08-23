@@ -1,4 +1,4 @@
-[![Travis-CI](https://travis-ci.org/IndabaConsultores/DbCallCDI.svg?branch=master)](https://travis-ci.org/IndabaConsultores/DbCallCDI) [![Sonarcloud](https://sonarcloud.io/api/badges/gate?key=es.indaba:DbCallCDI:sonar)](https://sonarcloud.io/dashboard?id=es.indaba%3ADbCallCDI%3Asonar)
+[![Travis-CI](https://travis-ci.org/IndabaConsultores/DbCallCDI.svg?branch=master)](https://travis-ci.org/IndabaConsultores/DbCallCDI) [![Sonarcloud](https://sonarcloud.io/api/badges/gate?key=es.indaba:DbCallCDI:sonar)](https://sonarcloud.io/dashboard?id=es.indaba%3ADbCallCDI%3Asonar) [![SonarCloud Technical Debt](https://sonarcloud.io/api/badges/measure?key=es.indaba:DbCallCDI:sonar&metric=sqale_debt_ratio)](https://sonarcloud.io/dashboard?id=es.indaba%3ADbCallCDI%3Asonar) [![SonarCloud Coverage](https://sonarcloud.io/api/badges/measure?key=es.indaba:DbCallCDI:sonar&metric=coverage)](https://sonarcloud.io/dashboard?id=es.indaba%3ADbCallCDI%3Asonar)
 
 DB Call CDI Extension (LGPL)
 =============
