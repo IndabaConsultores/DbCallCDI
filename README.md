@@ -1,3 +1,5 @@
+![Travis-CI](https://travis-ci.org/IndabaConsultores/DbCallCDI.svg?branch=master)
+
 DB Call CDI Extension (LGPL)
 =============
 
