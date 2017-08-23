@@ -1,4 +1,4 @@
-![Travis-CI](https://travis-ci.org/IndabaConsultores/DbCallCDI.svg?branch=master)
+![Travis-CI](https://travis-ci.org/IndabaConsultores/DbCallCDI.svg?branch=master) ![Sonarcloud](https://sonarcloud.io/api/badges/gate?key=es.indaba:DbCallCDI:sonar)
 
 DB Call CDI Extension (LGPL)
 =============
