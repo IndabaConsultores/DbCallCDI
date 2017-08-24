@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration name="com.orona.security.server.service" status="error">
+<Configuration name="es.indaba.jdbc.test" status="error">
 
     <Appenders>
         <Console name="STDOUT" target="SYSTEM_OUT">
