@@ -108,8 +108,7 @@ public class GenericWork implements Work {
 
     @SuppressWarnings("unchecked")
     private ResultSet collectResult(final FieldResult[] fields, final CallableStatement st)
-            throws InstantiationException, IllegalAccessException, SQLException, ReflectiveOperationException,
-            InvocationTargetException, NoSuchMethodException {
+            throws SQLException, ReflectiveOperationException {
         ResultSet rs;
         resultObject = returnType.newInstance();
         rs = st.getResultSet();
