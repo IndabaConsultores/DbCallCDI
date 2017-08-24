@@ -32,11 +32,23 @@ public class StoredProceduresTest extends AbstractTest {
         DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
         dbTester.callNotExistingAsFunction();
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void testWrongDefinition() throws Exception {
         DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
         dbTester.callWrongDefinition();
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testUnsupportedConvertion() throws Exception {
+        DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
+        dbTester.callEchoNotSupportedConvertionAsFunction("Test");
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void UtilDateNotSupportedSQLType() throws Exception {
+        DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
+        dbTester.callEchoUtilDateNotSupportedSQLTypeAsFunction(new Date());
     }
 
     @Test
@@ -44,13 +56,13 @@ public class StoredProceduresTest extends AbstractTest {
         DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
         ProcedureResult<String> result = dbTester.callEchoAsFunction(null);
         assertNotNull(result);
-        assertNull (result.getValue());
+        assertNull(result.getValue());
 
         result = dbTester.callEchoAsProcedure(null);
         assertNotNull(result);
-        assertNull (result.getValue());
+        assertNull(result.getValue());
     }
-    
+
     @Test
     public void testEmpty() throws Exception {
         DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
@@ -140,7 +152,7 @@ public class StoredProceduresTest extends AbstractTest {
         assertEquals(DateUtils.truncate(testVal, Calendar.DAY_OF_MONTH),
                 DateUtils.truncate(result.getValue(), Calendar.DAY_OF_MONTH));
     }
-    
+
     @Test
     public void testSQLDate() throws Exception {
         java.util.Date testVal = new java.util.Date();
@@ -151,6 +163,21 @@ public class StoredProceduresTest extends AbstractTest {
                 DateUtils.truncate(result.getValue(), Calendar.DAY_OF_MONTH));
 
         result = dbTester.callEchoSQLDateAsProcedure(testVal);
+        assertNotNull(result);
+        assertEquals(DateUtils.truncate(testVal, Calendar.DAY_OF_MONTH),
+                DateUtils.truncate(result.getValue(), Calendar.DAY_OF_MONTH));
+    }
+
+    @Test
+    public void testSQLDateUtilDate() throws Exception {
+        java.util.Date testVal = new java.util.Date();
+        DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
+        ProcedureResult<Date> result = dbTester.callEchoUtilDateUtilDateAsFunction(testVal);
+        assertNotNull(result);
+        assertEquals(DateUtils.truncate(testVal, Calendar.DAY_OF_MONTH),
+                DateUtils.truncate(result.getValue(), Calendar.DAY_OF_MONTH));
+
+        result = dbTester.callEchoUtilDateUtilDateAsProcedure(testVal);
         assertNotNull(result);
         assertEquals(DateUtils.truncate(testVal, Calendar.DAY_OF_MONTH),
                 DateUtils.truncate(result.getValue(), Calendar.DAY_OF_MONTH));

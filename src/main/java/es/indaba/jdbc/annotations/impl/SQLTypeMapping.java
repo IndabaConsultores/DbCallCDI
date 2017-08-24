@@ -14,6 +14,7 @@ import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -147,19 +148,26 @@ public final class SQLTypeMapping {
             throws SQLException, ReflectiveOperationException {
         if (sqlType == null || sqlType.equals(Object.class)) {
             setSqlParameter(cs, javaType, position, value);
-        } else {
+        } else if (value instanceof java.util.Date) {
             java.util.Date convertedValue = null;
-            if (value instanceof java.util.Date) {
-                if (sqlType.equals(java.sql.Date.class)) {
-                    convertedValue = new java.sql.Date(((java.util.Date) value).getTime());
-                } else if (sqlType.equals(java.sql.Timestamp.class)) {
-                    convertedValue = new java.sql.Timestamp(((java.util.Date) value).getTime());
-                } else if (sqlType.equals(java.sql.Time.class)) {
-                    convertedValue = new java.sql.Time(((java.util.Date) value).getTime());
-                }
+            if (sqlType.equals(java.sql.Date.class)) {
+                convertedValue = new java.sql.Date(((java.util.Date) value).getTime());
+            } else if (sqlType.equals(java.sql.Timestamp.class)) {
+                convertedValue = new java.sql.Timestamp(((java.util.Date) value).getTime());
+            } else if (sqlType.equals(java.sql.Time.class)) {
+                convertedValue = new java.sql.Time(((java.util.Date) value).getTime());
+            } else if (sqlType.equals(java.util.Date.class)) {
+                convertedValue = (Date) value;
+            } else {
+                throw new UnsupportedOperationException(
+                        "Type conversion supported from java.util.Date to " + sqlType.getName());
             }
             cs.setObject(position, convertedValue, java2SQL.get(sqlType));
+        } else {
+            throw new UnsupportedOperationException(
+                    "Type conversion supported from java.util.Date to java.sql.* Date subclasses");
         }
+
     }
 
     public static <T> void setSqlParameter(final CallableStatement cs, final Class<T> javaType, final int position,

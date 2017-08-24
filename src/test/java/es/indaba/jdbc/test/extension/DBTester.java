@@ -105,6 +105,29 @@ public interface DBTester {
     @DatabaseCall
     public ProcedureResult<Date> callEchoSQLDateAsProcedure(@StoredProcedureParameter(value=1, sqlType=java.sql.Date.class) java.util.Date name) throws Exception;
 
+    
+    @StoredProcedure("CALL echoDate(?)")
+    @StoredProcedureResult({@FieldResult(name = "value", position = FieldResult.RESULTSET, type = Date.class)})
+    @DatabaseCall
+    public ProcedureResult<Date> callEchoUtilDateUtilDateAsFunction(@StoredProcedureParameter(value=1, sqlType=java.util.Date.class) java.util.Date name) throws Exception;
+
+    
+    @StoredProcedure("CALL echoDateProc(?,?)")
+    @StoredProcedureResult({@FieldResult(name = "value", position = 2, type = Date.class)})
+    @DatabaseCall
+    public ProcedureResult<Date> callEchoUtilDateUtilDateAsProcedure(@StoredProcedureParameter(value=1, sqlType=java.util.Date.class) java.util.Date name) throws Exception;
+
+    @StoredProcedure("CALL echoDate(?)")
+    @StoredProcedureResult({@FieldResult(name = "value", position = FieldResult.RESULTSET, type = Date.class)})
+    @DatabaseCall
+    public ProcedureResult<Date> callEchoUtilDateNotSupportedSQLTypeAsFunction(@StoredProcedureParameter(value=1, sqlType=Integer.class) java.util.Date name) throws Exception;
+
+    @StoredProcedure("CALL echoDate(?)")
+    @StoredProcedureResult({@FieldResult(name = "value", position = FieldResult.RESULTSET, type = Date.class)})
+    @DatabaseCall
+    public ProcedureResult<Date> callEchoNotSupportedConvertionAsFunction(@StoredProcedureParameter(value=1, sqlType=Integer.class) String name) throws Exception;
+    
+    
     @StoredProcedure("CALL echoTime(?)")
     @StoredProcedureResult({@FieldResult(name = "value", position = FieldResult.RESULTSET, type = Date.class,
             sqlType = java.sql.Time.class)})
