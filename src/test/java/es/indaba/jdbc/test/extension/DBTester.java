@@ -46,6 +46,11 @@ public interface DBTester {
     @DatabaseCall
     public ProcedureResult<String> callEchoAsFunction(@StoredProcedureParameter(1) String name) throws Exception;
 
+    @StoredProcedure("CALL echo(?)")
+    @StoredProcedureResult({@FieldResult(name = "value", position = FieldResult.RESULTSET)})
+    @DatabaseCall
+    public ProcedureResult<String> callEchoUnsuportedTypeAsFunction(@StoredProcedureParameter(1) ProcedureResult<String> name) throws Exception;
+    
     @StoredProcedure("CALL echoProc(?,?)")
     @StoredProcedureResult({@FieldResult(name = "value", position = 2)})
     @DatabaseCall

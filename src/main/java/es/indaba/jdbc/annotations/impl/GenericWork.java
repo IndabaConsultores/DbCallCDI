@@ -36,32 +36,16 @@ public class GenericWork implements Work {
     private Object resultObject;
     private Exception workException;
 
-    public StoredProcedure getProcedure() {
-        return procedure;
-    }
-
     public void setProcedure(final StoredProcedure procedure) {
         this.procedure = procedure;
-    }
-
-    public StoredProcedureResult getProceduresResult() {
-        return proceduresResult;
     }
 
     public void setProceduresResult(final StoredProcedureResult proceduresResult) {
         this.proceduresResult = proceduresResult;
     }
 
-    public List<SQLParameter> getParameters() {
-        return parameters;
-    }
-
     public void setParameters(final List<SQLParameter> parameters) {
         this.parameters = parameters;
-    }
-
-    public Class getReturnType() {
-        return returnType;
     }
 
     public void setReturnType(final Class returnType) {
@@ -155,6 +139,8 @@ public class GenericWork implements Work {
                 } else {
                     st.setNull(pos, jdbcType);
                 }
+            } else {
+                throw new IllegalArgumentException("Type " + type + " not supported as input parameter");
             }
         }
     }

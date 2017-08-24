@@ -38,6 +38,12 @@ public class StoredProceduresTest extends AbstractTest {
         DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
         dbTester.callWrongDefinition();
     }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testUnsuportedType() throws Exception {
+        DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
+        dbTester.callEchoUnsuportedTypeAsFunction(new ProcedureResult<>());
+    }
 
     @Test(expected = UnsupportedOperationException.class)
     public void testUnsupportedConvertion() throws Exception {
