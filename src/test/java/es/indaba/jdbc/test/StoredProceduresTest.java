@@ -143,7 +143,7 @@ public class StoredProceduresTest extends AbstractTest {
     
     @Test
     public void testSQLDate() throws Exception {
-        java.sql.Date testVal = new java.sql.Date(System.currentTimeMillis());
+        java.util.Date testVal = new java.util.Date();
         DBTester dbTester = BeanProvider.getContextualReference(DBTester.class, false);
         ProcedureResult<Date> result = dbTester.callEchoSQLDateAsFunction(testVal);
         assertNotNull(result);
