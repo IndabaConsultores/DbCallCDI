@@ -31,7 +31,7 @@
 
     <scm>
         <url>https://github.com/IndabaConsultores/DbCallCDI</url>
-        <connection>https://github.com/IndabaConsultores/DbCallCDI.git</connection>
+        <connection>scm:git:https://github.com/IndabaConsultores/DbCallCDI.git</connection>
     </scm>
 
     <developers>
