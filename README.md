@@ -68,7 +68,7 @@ public class ProcedureResult<T> {
 }
 ```
 
-### Using EntityManager Qualifier
+### Using EntityManager Qualifier
 
 ```java
 @ApplicationScoped
@@ -88,3 +88,6 @@ Check tests for detailed use.
 * JDBC CallableStatement - https://docs.oracle.com/javase/7/docs/api/java/sql/CallableStatement.html
 * CDI Extension - https://docs.jboss.org/weld/reference/latest/en-US/html/extend.html
 * DeltaSpike - https://deltaspike.apache.org/index.html
+
+## Contribute
+Pull requests are welcomed!!
