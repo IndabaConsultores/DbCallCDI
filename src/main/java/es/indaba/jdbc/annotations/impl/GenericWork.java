@@ -9,6 +9,7 @@
  *******************************************************************************/
 package es.indaba.jdbc.annotations.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -72,7 +73,6 @@ public class GenericWork implements Work {
         return workException;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void execute(final Connection con) throws SQLException {
         final String procedureCall = procedure.value();
@@ -82,50 +82,13 @@ public class GenericWork implements Work {
         ResultSet rs = null;
         try {
             st = con.prepareCall(procedureCall);
-            for (final SQLParameter p : parameters) {
-                final int pos = p.getPosition();
-                final Object val = p.getValue();
-                final Class type = p.getType();
-                final Class sqlType = p.getSqlType();
-                final Integer jdbcType = SQLTypeMapping.getSqlTypeforClass(type);
-                if (jdbcType != null) {
-                    if (val != null) {
-                        SQLTypeMapping.setSqlParameter(st, type, sqlType, pos, val);
-                    } else {
-                        st.setNull(pos, jdbcType);
-                    }
-                }
-            }
-            for (final FieldResult field : fields) {
-                final int position = field.position();
-                Class type = field.sqlType();
-                if (type == null || type.equals(Object.class)) {
-                    type = field.type();
-                }
-                final Integer jdbcType = SQLTypeMapping.getSqlTypeforClass(type);
-                if (position != FieldResult.RESULTSET) {
-                    st.registerOutParameter(position, jdbcType);
-                }
-            }
+            prepareInputParameters(st);
+            prepareOutputParameters(fields, st);
             st.execute();
 
             if (!returnType.equals(void.class)) {
                 // Return instance
-                resultObject = returnType.newInstance();
-                rs = st.getResultSet();
-                for (final FieldResult field : fields) {
-                    final String property = field.name();
-                    Object result = null;
-                    if (field.position() == FieldResult.RESULTSET) {
-                        rs.next();
-                        result = SQLTypeMapping.getSqlResultsetResult(rs, field.type(), field.sqlType(), 1);
-                    } else {
-                        result = SQLTypeMapping.getSqlResult(st, field.type(), field.sqlType(), field.position());
-                    }
-                    if (result != null) {
-                        PropertyUtils.setProperty(resultObject, property, result);
-                    }
-                }
+                rs = collectResult(fields, st);
             }
         } catch (SQLException | ReflectiveOperationException e) {
             LOGGER.error("DBCallCDI - Error calling {}", procedureCall, e);
@@ -143,11 +106,63 @@ public class GenericWork implements Work {
 
     }
 
+    @SuppressWarnings("unchecked")
+    private ResultSet collectResult(final FieldResult[] fields, final CallableStatement st)
+            throws InstantiationException, IllegalAccessException, SQLException, ReflectiveOperationException,
+            InvocationTargetException, NoSuchMethodException {
+        ResultSet rs;
+        resultObject = returnType.newInstance();
+        rs = st.getResultSet();
+        for (final FieldResult field : fields) {
+            final String property = field.name();
+            Object result = null;
+            if (field.position() == FieldResult.RESULTSET) {
+                rs.next();
+                result = SQLTypeMapping.getSqlResultsetResult(rs, field.type(), field.sqlType(), 1);
+            } else {
+                result = SQLTypeMapping.getSqlResult(st, field.type(), field.sqlType(), field.position());
+            }
+            if (result != null) {
+                PropertyUtils.setProperty(resultObject, property, result);
+            }
+        }
+        return rs;
+    }
+
+    private void prepareOutputParameters(final FieldResult[] fields, final CallableStatement st) throws SQLException {
+        for (final FieldResult field : fields) {
+            final int position = field.position();
+            Class type = field.sqlType();
+            if (type == null || type.equals(Object.class)) {
+                type = field.type();
+            }
+            final Integer jdbcType = SQLTypeMapping.getSqlTypeforClass(type);
+            if (position != FieldResult.RESULTSET) {
+                st.registerOutParameter(position, jdbcType);
+            }
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void prepareInputParameters(final CallableStatement st) throws SQLException, ReflectiveOperationException {
+        for (final SQLParameter p : parameters) {
+            final int pos = p.getPosition();
+            final Object val = p.getValue();
+            final Class type = p.getType();
+            final Class sqlType = p.getSqlType();
+            final Integer jdbcType = SQLTypeMapping.getSqlTypeforClass(type);
+            if (jdbcType != null) {
+                if (val != null) {
+                    SQLTypeMapping.setSqlParameter(st, type, sqlType, pos, val);
+                } else {
+                    st.setNull(pos, jdbcType);
+                }
+            }
+        }
+    }
+
     public Object getResultObject() {
         return resultObject;
     }
 
-    public void setResultObject(final Object resultObject) {
-        this.resultObject = resultObject;
-    }
 }
