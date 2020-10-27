@@ -57,7 +57,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <deltaspike.version>1.5.2</deltaspike.version>
         <weld.version>2.3.3.Final</weld.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <commons.beanutils.version>1.9.4</commons.beanutils.version>
         <commons.lang.version>2.6</commons.lang.version>
         <javassist.version>3.7.ga</javassist.version>
