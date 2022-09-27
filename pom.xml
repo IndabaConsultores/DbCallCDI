@@ -56,12 +56,12 @@
         <maven.compiler.testTarget>1.8</maven.compiler.testTarget>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <deltaspike.version>1.5.2</deltaspike.version>
-        <weld.version>2.3.3.Final</weld.version>
+        <weld.version>2.4.8.Final</weld.version>
         <junit.version>4.13.1</junit.version>
         <commons.beanutils.version>1.9.4</commons.beanutils.version>
         <commons.lang.version>2.6</commons.lang.version>
         <javassist.version>3.7.ga</javassist.version>
-        <hibernate.version>5.1.0.Final</hibernate.version>
+        <hibernate.version>5.6.12.Final</hibernate.version>
         <hsqldb.version>2.3.3</hsqldb.version>
         <postgresql.version>42.3.7</postgresql.version>
         <slf4j.version>1.7.21</slf4j.version>
@@ -188,7 +188,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.9</version>
+                <version>0.8.8</version>
                 <executions>
                     <execution>
                         <id>default-prepare-agent</id>
